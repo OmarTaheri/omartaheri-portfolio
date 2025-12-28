@@ -7,6 +7,7 @@ import { AnimatedText } from '@/components/AnimatedText'
 import { GitHubStats } from '@/components/GitHubStats'
 import { EasterEggs } from '@/components/EasterEggs'
 import { TechStack } from '@/components/TechStack'
+import type { Post } from '@/payload-types'
 
 export const dynamic = 'force-dynamic'
 
@@ -25,7 +26,7 @@ export default async function HomePage() {
   }
 
   // Fetch latest posts
-  let posts: typeof postsResult.docs = []
+  let posts: Post[] = []
   try {
     const postsResult = await payload.find({
       collection: 'posts',
