@@ -9,6 +9,7 @@ import { imageHero1 } from './image-hero-1'
 import { post1 } from './post-1'
 import { post2 } from './post-2'
 import { post3 } from './post-3'
+import { post4 } from './post-4'
 
 const collections: CollectionSlug[] = [
   'categories',
@@ -20,7 +21,7 @@ const collections: CollectionSlug[] = [
   'search',
 ]
 
-const globals: GlobalSlug[] = ['header', 'footer']
+const _globals: GlobalSlug[] = ['header', 'footer', 'home', 'me', 'contact']
 
 const categories = ['Technology', 'News', 'Finance', 'Design', 'Software', 'Engineering']
 
@@ -43,21 +44,29 @@ export const seed = async ({
   // the custom `/api/seed` endpoint does not
   payload.logger.info(`— Clearing collections and globals...`)
 
-  // clear the database
-  await Promise.all(
-    globals.map((global) =>
-      payload.updateGlobal({
-        slug: global,
-        data: {
-          navItems: [],
-        },
-        depth: 0,
-        context: {
-          disableRevalidate: true,
-        },
-      }),
-    ),
-  )
+  // clear the header and footer globals (they have navItems)
+  await Promise.all([
+    payload.updateGlobal({
+      slug: 'header',
+      data: {
+        navItems: [],
+      },
+      depth: 0,
+      context: {
+        disableRevalidate: true,
+      },
+    }),
+    payload.updateGlobal({
+      slug: 'footer',
+      data: {
+        navItems: [],
+      },
+      depth: 0,
+      context: {
+        disableRevalidate: true,
+      },
+    }),
+  ])
 
   await Promise.all(
     collections.map((collection) => payload.db.deleteMany({ collection, req, where: {} })),
@@ -169,26 +178,42 @@ export const seed = async ({
     data: post3({ heroImage: image3Doc, blockImage: image1Doc, author: demoAuthor }),
   })
 
+  const post4Doc = await payload.create({
+    collection: 'posts',
+    depth: 0,
+    context: {
+      disableRevalidate: true,
+    },
+    data: post4({ heroImage: image1Doc, blockImage: image2Doc, author: demoAuthor }),
+  })
+
   // update each post with related posts
   await payload.update({
     id: post1Doc.id,
     collection: 'posts',
     data: {
-      relatedPosts: [post2Doc.id, post3Doc.id],
+      relatedPosts: [post2Doc.id, post3Doc.id, post4Doc.id],
     },
   })
   await payload.update({
     id: post2Doc.id,
     collection: 'posts',
     data: {
-      relatedPosts: [post1Doc.id, post3Doc.id],
+      relatedPosts: [post1Doc.id, post3Doc.id, post4Doc.id],
     },
   })
   await payload.update({
     id: post3Doc.id,
     collection: 'posts',
     data: {
-      relatedPosts: [post1Doc.id, post2Doc.id],
+      relatedPosts: [post1Doc.id, post2Doc.id, post4Doc.id],
+    },
+  })
+  await payload.update({
+    id: post4Doc.id,
+    collection: 'posts',
+    data: {
+      relatedPosts: [post1Doc.id, post2Doc.id, post3Doc.id],
     },
   })
 
@@ -270,6 +295,64 @@ export const seed = async ({
             },
           },
         ],
+      },
+    }),
+  ])
+
+  payload.logger.info(`— Seeding portfolio globals...`)
+
+  // Seed home global with projects - one linked to a post, one without
+  await payload.updateGlobal({
+    slug: 'home',
+    data: {
+      name: 'Omar Taheri',
+      tagline: 'Builds for the web obsessed with AI',
+      intro: "Hi, I'm Omar Taheri and welcome to my digital corner. I'm happy you're here. Please make yourself comfortable.\nI love web dev, experimenting with new tools, and making things that feel good to use.",
+      ctaText: 'Want to chat?',
+      ctaLink: 'Drop me a line',
+      projects: [
+        {
+          name: 'JWT Authentication Guide',
+          description: 'A comprehensive guide to implementing JWT auth in Next.js',
+          linkedPost: post4Doc.id, // Link to the JWT post
+        },
+        {
+          name: 'Go Planner',
+          description: 'A degree planer service for students using AI',
+          // No linkedPost - this one is not linked
+        },
+      ],
+    },
+    context: {
+      disableRevalidate: true,
+    },
+  })
+
+  await Promise.all([
+    payload.updateGlobal({
+      slug: 'me',
+      data: {
+        title: 'Hello world',
+        subtitle: 'I am Omar.',
+        // Rich text content will be added via admin panel
+      },
+      context: {
+        disableRevalidate: true,
+      },
+    }),
+    payload.updateGlobal({
+      slug: 'contact',
+      data: {
+        title: 'Contact me',
+        email: 'omartaheri2005@gmail.com',
+        description: "Feel free to reach out if you want to collaborate, have a question, or just want to say hi!",
+        socialLinks: [
+          { platform: 'GitHub', url: 'https://github.com/omartaheri' },
+          { platform: 'LinkedIn', url: 'https://linkedin.com/in/omartaheri' },
+        ],
+      },
+      context: {
+        disableRevalidate: true,
       },
     }),
   ])

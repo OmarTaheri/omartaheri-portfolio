@@ -4,7 +4,12 @@ node_modules
 .DS_Store
 .env
 .next
+.cursor
+.claude
 .vercel
+
+AGENTS.md
+CLAUDE.md
 
 # Payload default media upload directory
 public/media/

@@ -95,7 +95,8 @@ const config = {
       },
       fontFamily: {
         mono: ['var(--font-geist-mono)'],
-        sans: ['var(--font-geist-sans)'],
+        sans: ['Neco', 'serif'],
+        serif: ['Neco', 'serif'],
       },
       keyframes: {
         'accordion-down': {

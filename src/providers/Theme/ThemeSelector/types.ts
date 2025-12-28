@@ -1,5 +1,5 @@
-export type Theme = 'dark' | 'light'
+export type Theme = 'blue' | 'red' | 'green'
 
-export const themeLocalStorageKey = 'payload-theme'
+export const themeLocalStorageKey = 'portfolio-theme'
 
-export const defaultTheme = 'light'
+export const defaultTheme: Theme = 'blue'

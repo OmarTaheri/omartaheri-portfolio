@@ -10,20 +10,8 @@ export const InitTheme: React.FC = () => {
       dangerouslySetInnerHTML={{
         __html: `
   (function () {
-    function getImplicitPreference() {
-      var mediaQuery = '(prefers-color-scheme: dark)'
-      var mql = window.matchMedia(mediaQuery)
-      var hasImplicitPreference = typeof mql.matches === 'boolean'
-
-      if (hasImplicitPreference) {
-        return mql.matches ? 'dark' : 'light'
-      }
-
-      return null
-    }
-
     function themeIsValid(theme) {
-      return theme === 'light' || theme === 'dark'
+      return theme === 'blue' || theme === 'red' || theme === 'green'
     }
 
     var themeToSet = '${defaultTheme}'
@@ -31,12 +19,6 @@ export const InitTheme: React.FC = () => {
 
     if (themeIsValid(preference)) {
       themeToSet = preference
-    } else {
-      var implicitPreference = getImplicitPreference()
-
-      if (implicitPreference) {
-        themeToSet = implicitPreference
-      }
     }
 
     document.documentElement.setAttribute('data-theme', themeToSet)
