@@ -9,7 +9,7 @@ FROM base AS deps
 COPY package.json package-lock.json ./
 # If you want the temporary bypass, use this instead:
 # RUN npm ci --legacy-peer-deps
-RUN npm ci
+RUN npm install
 
 FROM base AS builder
 COPY --from=deps /app/node_modules ./node_modules
