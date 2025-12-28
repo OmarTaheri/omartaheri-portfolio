@@ -25,7 +25,7 @@ export default async function HomePage() {
   }
 
   // Fetch latest posts
-  let posts: Awaited<ReturnType<typeof payload.find<'posts'>>>['docs'] = []
+  let posts: typeof postsResult.docs = []
   try {
     const postsResult = await payload.find({
       collection: 'posts',
