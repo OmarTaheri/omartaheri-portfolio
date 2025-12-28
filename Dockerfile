@@ -12,9 +12,15 @@ COPY package.json package-lock.json ./
 RUN npm install
 
 FROM base AS builder
+ARG DATABASE_URL
+ARG PAYLOAD_SECRET
+ENV DATABASE_URL=${DATABASE_URL}
+ENV PAYLOAD_SECRET=${PAYLOAD_SECRET}
 COPY --from=deps /app/node_modules ./node_modules
 COPY . .
 RUN npm run build
+# Run migrations after build (when source files are available)
+RUN npx payload migrate
 
 FROM base AS runner
 ENV NODE_ENV=production

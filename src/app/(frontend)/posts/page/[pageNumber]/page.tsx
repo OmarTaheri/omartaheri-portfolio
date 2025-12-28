@@ -4,10 +4,11 @@ import { CollectionArchive } from '@/components/CollectionArchive'
 import { PageRange } from '@/components/PageRange'
 import { Pagination } from '@/components/Pagination'
 import configPromise from '@payload-config'
-import { getPayload } from 'payload'
+import { getPayload, type PaginatedDocs } from 'payload'
 import React from 'react'
 import PageClient from './page.client'
 import { notFound } from 'next/navigation'
+import type { Post } from '@/payload-types'
 
 export const revalidate = 600
 
@@ -25,13 +26,18 @@ export default async function Page({ params: paramsPromise }: Args) {
 
   if (!Number.isInteger(sanitizedPageNumber)) notFound()
 
-  const posts = await payload.find({
-    collection: 'posts',
-    depth: 1,
-    limit: 12,
-    page: sanitizedPageNumber,
-    overrideAccess: false,
-  })
+  let posts: PaginatedDocs<Post> | null = null
+  try {
+    posts = await payload.find({
+      collection: 'posts',
+      depth: 1,
+      limit: 12,
+      page: sanitizedPageNumber,
+      overrideAccess: false,
+    })
+  } catch {
+    // Database might not be available or table doesn't exist yet
+  }
 
   return (
     <div className="pt-24 pb-24">
@@ -42,22 +48,30 @@ export default async function Page({ params: paramsPromise }: Args) {
         </div>
       </div>
 
-      <div className="container mb-8">
-        <PageRange
-          collection="posts"
-          currentPage={posts.page}
-          limit={12}
-          totalDocs={posts.totalDocs}
-        />
-      </div>
+      {posts ? (
+        <>
+          <div className="container mb-8">
+            <PageRange
+              collection="posts"
+              currentPage={posts.page}
+              limit={12}
+              totalDocs={posts.totalDocs}
+            />
+          </div>
 
-      <CollectionArchive posts={posts.docs} />
+          <CollectionArchive posts={posts.docs} />
 
-      <div className="container">
-        {posts?.page && posts?.totalPages > 1 && (
-          <Pagination page={posts.page} totalPages={posts.totalPages} />
-        )}
-      </div>
+          <div className="container">
+            {posts?.page && posts?.totalPages > 1 && (
+              <Pagination page={posts.page} totalPages={posts.totalPages} />
+            )}
+          </div>
+        </>
+      ) : (
+        <div className="container">
+          <p>No posts yet. Check back soon!</p>
+        </div>
+      )}
     </div>
   )
 }

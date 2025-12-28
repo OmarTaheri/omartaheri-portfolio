@@ -6,6 +6,7 @@ import { AnimatedSection } from '@/components/AnimatedSection'
 import { AnimatedText } from '@/components/AnimatedText'
 import { EasterEggs } from '@/components/EasterEggs'
 import { calculateReadingTime, formatReadingTime } from '@/utilities/readingTime'
+import type { Post } from '@/payload-types'
 
 export const dynamic = 'force-dynamic'
 
@@ -13,19 +14,23 @@ export default async function BlogPage() {
   const payload = await getPayload({ config })
 
   // Fetch all published posts
-  const postsResult = await payload.find({
-    collection: 'posts',
-    limit: 100,
-    sort: '-publishedAt',
-    depth: 1,
-    where: {
-      _status: {
-        equals: 'published',
+  let posts: Post[] = []
+  try {
+    const postsResult = await payload.find({
+      collection: 'posts',
+      limit: 100,
+      sort: '-publishedAt',
+      depth: 1,
+      where: {
+        _status: {
+          equals: 'published',
+        },
       },
-    },
-  })
-
-  const posts = postsResult.docs
+    })
+    posts = postsResult.docs
+  } catch {
+    // Database might not be available or table doesn't exist yet
+  }
 
   return (
     <div className="space-y-8">

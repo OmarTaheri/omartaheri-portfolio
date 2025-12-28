@@ -4,9 +4,10 @@ import { CollectionArchive } from '@/components/CollectionArchive'
 import { PageRange } from '@/components/PageRange'
 import { Pagination } from '@/components/Pagination'
 import configPromise from '@payload-config'
-import { getPayload } from 'payload'
+import { getPayload, type PaginatedDocs } from 'payload'
 import React from 'react'
 import PageClient from './page.client'
+import type { Post } from '@/payload-types'
 
 export const dynamic = 'force-dynamic'
 export const revalidate = 600
@@ -14,18 +15,24 @@ export const revalidate = 600
 export default async function Page() {
   const payload = await getPayload({ config: configPromise })
 
-  const posts = await payload.find({
-    collection: 'posts',
-    depth: 1,
-    limit: 12,
-    overrideAccess: false,
-    select: {
-      title: true,
-      slug: true,
-      categories: true,
-      meta: true,
-    },
-  })
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  let posts: PaginatedDocs<any> | null = null
+  try {
+    posts = await payload.find({
+      collection: 'posts',
+      depth: 1,
+      limit: 12,
+      overrideAccess: false,
+      select: {
+        title: true,
+        slug: true,
+        categories: true,
+        meta: true,
+      },
+    })
+  } catch {
+    // Database might not be available or table doesn't exist yet
+  }
 
   return (
     <div className="pt-24 pb-24">
@@ -36,22 +43,30 @@ export default async function Page() {
         </div>
       </div>
 
-      <div className="container mb-8">
-        <PageRange
-          collection="posts"
-          currentPage={posts.page}
-          limit={12}
-          totalDocs={posts.totalDocs}
-        />
-      </div>
+      {posts ? (
+        <>
+          <div className="container mb-8">
+            <PageRange
+              collection="posts"
+              currentPage={posts.page}
+              limit={12}
+              totalDocs={posts.totalDocs}
+            />
+          </div>
 
-      <CollectionArchive posts={posts.docs} />
+          <CollectionArchive posts={posts.docs} />
 
-      <div className="container">
-        {posts.totalPages > 1 && posts.page && (
-          <Pagination page={posts.page} totalPages={posts.totalPages} />
-        )}
-      </div>
+          <div className="container">
+            {posts.totalPages > 1 && posts.page && (
+              <Pagination page={posts.page} totalPages={posts.totalPages} />
+            )}
+          </div>
+        </>
+      ) : (
+        <div className="container">
+          <p>No posts yet. Check back soon!</p>
+        </div>
+      )}
     </div>
   )
 }
