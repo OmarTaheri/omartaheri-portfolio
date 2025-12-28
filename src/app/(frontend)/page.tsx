@@ -25,18 +25,22 @@ export default async function HomePage() {
   }
 
   // Fetch latest posts
-  const postsResult = await payload.find({
-    collection: 'posts',
-    limit: 5,
-    sort: '-publishedAt',
-    where: {
-      _status: {
-        equals: 'published',
+  let posts: Awaited<ReturnType<typeof payload.find<'posts'>>>['docs'] = []
+  try {
+    const postsResult = await payload.find({
+      collection: 'posts',
+      limit: 5,
+      sort: '-publishedAt',
+      where: {
+        _status: {
+          equals: 'published',
+        },
       },
-    },
-  })
-
-  const posts = postsResult.docs
+    })
+    posts = postsResult.docs
+  } catch {
+    // Database not available during build
+  }
 
   return (
     <div className="space-y-16">
