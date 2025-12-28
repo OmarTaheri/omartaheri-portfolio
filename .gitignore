@@ -4,9 +4,11 @@ node_modules
 .DS_Store
 .env
 .next
+.cursor/*
 .cursor
 .claude
 .vercel
+
 
 AGENTS.md
 CLAUDE.md
