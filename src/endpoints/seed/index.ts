@@ -308,18 +308,7 @@ export const seed = async ({
       name: 'Omar Taheri',
       tagline: 'Builds for the web obsessed with AI',
       // introContent is a rich text field - will use fallback content or populate via admin
-      projects: [
-        {
-          name: 'JWT Authentication Guide',
-          description: 'A comprehensive guide to implementing JWT auth in Next.js',
-          linkedPost: post4Doc.id, // Link to the JWT post
-        },
-        {
-          name: 'Go Planner',
-          description: 'A degree planer service for students using AI',
-          // No linkedPost - this one is not linked
-        },
-      ],
+
     },
     context: {
       disableRevalidate: true,
