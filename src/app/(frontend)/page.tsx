@@ -76,7 +76,7 @@ export default async function HomePage() {
       <AnimatedSection delay={0.2}>
         <section className="space-y-4">
           <ZelligeThemeIcon themeName="blue" />
-          <h2 className="text-xl font-bold">{homeData?.tagline || 'Builds for the web obsessed with AI'}</h2>
+          <h2 className="font-bold">{homeData?.tagline || 'Builds for the web obsessed with AI'}</h2>
           {homeData?.introContent ? (
             <div className="prose prose-invert max-w-none text-[var(--text)]">
               <RichText data={homeData.introContent} enableGutter={false} />
@@ -106,7 +106,7 @@ export default async function HomePage() {
       <AnimatedSection delay={0.3}>
         <section className="space-y-4">
           <ZelligeThemeIcon themeName="green" />
-          <h2 className="text-xl font-bold">Projects</h2>
+          <h2 className="font-bold">Projects</h2>
           <div className="space-y-2">
             {homeData?.projects && homeData.projects.length > 0 ? (
               homeData.projects.map((project, index) => {
@@ -152,7 +152,7 @@ export default async function HomePage() {
       <AnimatedSection delay={0.5}>
         <section className="space-y-4">
           <ZelligeThemeIcon themeName="red" />
-          <h2 className="text-xl font-bold">Blog</h2>
+          <h2 className="font-bold">Blog</h2>
           {posts.length > 0 ? (
             <div className="space-y-4">
               {posts.map((post, index) => (
@@ -197,7 +197,7 @@ export default async function HomePage() {
       {/* GitHub Section */}
       <AnimatedSection delay={0.8}>
         <section className="space-y-4">
-          <h2 className="text-xl font-bold">GitHub Activity</h2>
+          <h2 className="font-bold">GitHub Activity</h2>
           <GitHubStats />
         </section>
       </AnimatedSection>
@@ -205,7 +205,7 @@ export default async function HomePage() {
       {/* NASA APOD Section */}
       <AnimatedSection delay={0.9}>
         <section className="space-y-4">
-          <h2 className="text-xl font-bold">From NASA</h2>
+          <h2 className="font-bold">From NASA</h2>
           <NasaApod />
         </section>
       </AnimatedSection>

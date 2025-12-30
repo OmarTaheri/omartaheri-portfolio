@@ -47,7 +47,7 @@ export default async function ContactPage() {
       {/* Email */}
       <AnimatedSection delay={0.4}>
         <div className="space-y-2">
-          <h2 className="text-xl font-bold">Email</h2>
+          <h2 className="font-bold">Email</h2>
           <a
             href={`mailto:${email}`}
             className="text-[var(--link)] hover:text-[var(--link-hover)] underline animated-link hover-scale inline-block"
@@ -61,7 +61,7 @@ export default async function ContactPage() {
       {socialLinks && socialLinks.length > 0 && (
         <AnimatedSection delay={0.5}>
           <div className="space-y-2">
-            <h2 className="text-xl font-bold">Links</h2>
+            <h2 className="font-bold">Links</h2>
             <div className="flex flex-col gap-2">
               {socialLinks.map((link, index) => (
                 <AnimatedSection key={index} delay={0.6 + index * 0.1}>

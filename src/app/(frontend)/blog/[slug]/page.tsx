@@ -126,7 +126,7 @@ export default async function BlogPostPage({ params }: PageProps) {
       {post.relatedPosts && Array.isArray(post.relatedPosts) && post.relatedPosts.length > 0 && (
         <AnimatedSection delay={0.7}>
           <section className="border-t border-[var(--border)] pt-8 mt-12">
-            <h2 className="text-xl font-bold mb-4">Related Posts</h2>
+            <h2 className="font-bold mb-4">Related Posts</h2>
             <div className="space-y-4">
               {post.relatedPosts.map((relatedPost, index) => {
                 if (typeof relatedPost !== 'object') return null
