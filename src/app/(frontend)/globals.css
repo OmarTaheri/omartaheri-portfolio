@@ -43,6 +43,15 @@
   font-display: swap;
 }
 
+/* BlockBlueprint Font for Titles */
+@font-face {
+  font-family: 'BlockBlueprint';
+  src: url('/fonts/BlockBlueprint.ttf') format('truetype');
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+
 @layer base {
   h1,
   h2,
@@ -50,7 +59,7 @@
   h4,
   h5,
   h6 {
-    font-family: 'Neco', serif;
+    font-family: 'BlockBlueprint', 'Neco', serif;
     font-weight: 700;
   }
 
@@ -123,6 +132,8 @@
     color: var(--text);
     font-family: 'Neco', serif;
     min-height: 100vh;
+    font-size: 1.125rem;
+    line-height: 1.75;
   }
 
   h1, h2, h3, h4, h5, h6 {
@@ -193,7 +204,7 @@ html[data-theme='green'] {
 .prose h3,
 .prose h4 {
   color: var(--title);
-  font-family: 'Neco', serif;
+  font-family: 'BlockBlueprint', 'Neco', serif;
 }
 
 .prose a {

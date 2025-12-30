@@ -297,6 +297,10 @@ export interface Media {
     };
     [k: string]: unknown;
   } | null;
+  /**
+   * A short subtitle or tagline for this image
+   */
+  subtitle?: string | null;
   folder?: (number | null) | FolderInterface;
   updatedAt: string;
   createdAt: string;
@@ -1230,6 +1234,7 @@ export interface PostsSelect<T extends boolean = true> {
 export interface MediaSelect<T extends boolean = true> {
   alt?: T;
   caption?: T;
+  subtitle?: T;
   folder?: T;
   updatedAt?: T;
   createdAt?: T;
@@ -1700,10 +1705,29 @@ export interface Footer {
 export interface Home {
   id: number;
   name: string;
+  /**
+   * GIF or image displayed under your name on the home page
+   */
+  profileGif?: (number | null) | Media;
   tagline: string;
-  intro: string;
-  ctaText?: string | null;
-  ctaLink?: string | null;
+  /**
+   * Intro text with links. Use the link feature to add CTAs.
+   */
+  introContent?: {
+    root: {
+      type: string;
+      children: {
+        type: any;
+        version: number;
+        [k: string]: unknown;
+      }[];
+      direction: ('ltr' | 'rtl') | null;
+      format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+      indent: number;
+      version: number;
+    };
+    [k: string]: unknown;
+  } | null;
   projects?:
     | {
         name: string;
@@ -1816,10 +1840,9 @@ export interface FooterSelect<T extends boolean = true> {
  */
 export interface HomeSelect<T extends boolean = true> {
   name?: T;
+  profileGif?: T;
   tagline?: T;
-  intro?: T;
-  ctaText?: T;
-  ctaLink?: T;
+  introContent?: T;
   projects?:
     | T
     | {

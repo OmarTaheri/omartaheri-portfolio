@@ -20,7 +20,7 @@ export const ZelligeThemeIcon = ({ themeName }: ZelligeThemeIconProps) => {
   return (
     <button
       onClick={() => setTheme(themeName)}
-      className={`w-16 h-16 mb-1 transition-all cursor-pointer ${theme === themeName ? 'grayscale' : ''}`}
+      className={`w-16 h-16 mb-0 transition-all cursor-pointer ${theme === themeName ? 'grayscale' : ''}`}
       aria-label={`Switch to ${themeName} theme`}
     >
       <Image

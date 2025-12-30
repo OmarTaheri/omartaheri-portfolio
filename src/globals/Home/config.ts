@@ -1,4 +1,9 @@
 import type { GlobalConfig } from 'payload'
+import {
+  FixedToolbarFeature,
+  InlineToolbarFeature,
+  lexicalEditor,
+} from '@payloadcms/richtext-lexical'
 import { revalidateHome } from './hooks/revalidateHome'
 
 export const Home: GlobalConfig = {
@@ -15,26 +20,34 @@ export const Home: GlobalConfig = {
       defaultValue: 'Omar Taheri',
     },
     {
+      name: 'profileGif',
+      type: 'upload',
+      relationTo: 'media',
+      label: 'Profile GIF/Image',
+      admin: {
+        description: 'GIF or image displayed under your name on the home page',
+      },
+    },
+    {
       name: 'tagline',
       type: 'text',
       required: true,
       defaultValue: 'Builds for the web obsessed with AI',
     },
     {
-      name: 'intro',
-      type: 'textarea',
-      required: true,
-      defaultValue: "Hi, I'm Omar Taheri and welcome to my digital corner. I'm happy you're here. Please make yourself comfortable.\nI love web dev, experimenting with new tools, and making things that feel good to use.",
-    },
-    {
-      name: 'ctaText',
-      type: 'text',
-      defaultValue: 'Want to chat?',
-    },
-    {
-      name: 'ctaLink',
-      type: 'text',
-      defaultValue: 'Drop me a line',
+      name: 'introContent',
+      type: 'richText',
+      label: 'Intro Content',
+      admin: {
+        description: 'Intro text with links. Use the link feature to add CTAs.',
+      },
+      editor: lexicalEditor({
+        features: ({ rootFeatures }) => [
+          ...rootFeatures,
+          FixedToolbarFeature(),
+          InlineToolbarFeature(),
+        ],
+      }),
     },
     {
       name: 'projects',

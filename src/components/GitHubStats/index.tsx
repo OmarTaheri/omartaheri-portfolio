@@ -60,12 +60,6 @@ export const GitHubStats = () => {
         <div>
           <span className="font-bold text-[var(--title)]">{stats.public_repos}</span> repos
         </div>
-        <div>
-          <span className="font-bold text-[var(--title)]">{stats.followers}</span> followers
-        </div>
-        <div>
-          <span className="font-bold text-[var(--title)]">{stats.following}</span> following
-        </div>
       </div>
 
       {/* Repos */}

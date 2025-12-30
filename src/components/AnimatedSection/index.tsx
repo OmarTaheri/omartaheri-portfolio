@@ -25,7 +25,7 @@ export const AnimatedSection = ({
   direction = 'up',
 }: AnimatedSectionProps) => {
   const ref = useRef<HTMLDivElement>(null)
-  const isInView = useInView(ref, { once: true, margin: '-50px' })
+  const isInView = useInView(ref, { once: true, margin: '0px' })
 
   const initialPosition = directionVariants[direction]
 
@@ -55,7 +55,7 @@ interface AnimatedListProps {
 
 export const AnimatedList = ({ children, className = '', staggerDelay = 0.1 }: AnimatedListProps) => {
   const ref = useRef<HTMLDivElement>(null)
-  const isInView = useInView(ref, { once: true, margin: '-50px' })
+  const isInView = useInView(ref, { once: true, margin: '0px' })
 
   return (
     <motion.div ref={ref} className={className}>

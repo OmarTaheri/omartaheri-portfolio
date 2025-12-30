@@ -1,12 +1,15 @@
 import { getPayload } from 'payload'
 import config from '@payload-config'
 import Link from 'next/link'
+import Image from 'next/image'
 import { ZelligeThemeIcon } from '@/components/ZelligeThemeIcon'
 import { AnimatedSection } from '@/components/AnimatedSection'
 import { AnimatedText } from '@/components/AnimatedText'
 import { GitHubStats } from '@/components/GitHubStats'
+import { NasaApod } from '@/components/NasaApod'
 import { EasterEggs } from '@/components/EasterEggs'
 import { TechStack } from '@/components/TechStack'
+import RichText from '@/components/RichText'
 import type { Post } from '@/payload-types'
 
 export const dynamic = 'force-dynamic'
@@ -49,9 +52,24 @@ export default async function HomePage() {
 
       {/* Header */}
       <header>
-        <h1 className="text-4xl md:text-5xl font-bold mb-12">
+        <h1 className="text-4xl md:text-5xl font-bold mb-4">
           <AnimatedText text={homeData?.name || 'Omar Taheri'} />
         </h1>
+        {/* Profile GIF/Image */}
+        {homeData?.profileGif && typeof homeData.profileGif === 'object' && homeData.profileGif.url && (
+          <AnimatedSection delay={0.1}>
+            <div className="max-w-xs mb-8">
+              <Image
+                src={homeData.profileGif.url}
+                alt={homeData.profileGif.alt || 'Profile'}
+                width={homeData.profileGif.width || 300}
+                height={homeData.profileGif.height || 300}
+                className="w-full h-auto"
+                unoptimized
+              />
+            </div>
+          </AnimatedSection>
+        )}
       </header>
 
       {/* Hero Section */}
@@ -59,17 +77,24 @@ export default async function HomePage() {
         <section className="space-y-4">
           <ZelligeThemeIcon themeName="blue" />
           <h2 className="text-xl font-bold">{homeData?.tagline || 'Builds for the web obsessed with AI'}</h2>
-          <div className="space-y-2 text-[var(--text)]">
-            {(homeData?.intro || "Hi, I'm Omar Taheri and welcome to my digital corner. I'm happy you're here. Please make yourself comfortable.\nI love web dev, experimenting with new tools, and making things that feel good to use.").split('\n').map((paragraph, index) => (
-              <p key={index}>{paragraph}</p>
-            ))}
-          </div>
-          <p className="text-[var(--text)]">
-            {homeData?.ctaText || 'Want to chat?'}{' '}
-            <Link href="/contact" className="underline text-[var(--link)] hover:text-[var(--link-hover)] animated-link">
-              {homeData?.ctaLink || 'Drop me a line'}
-            </Link>
-          </p>
+          {homeData?.introContent ? (
+            <div className="prose prose-invert max-w-none text-[var(--text)]">
+              <RichText data={homeData.introContent} enableGutter={false} />
+            </div>
+          ) : (
+            <>
+              <div className="space-y-2 text-[var(--text)]">
+                <p>Hi, I&apos;m Omar Taheri and welcome to my digital corner. I&apos;m happy you&apos;re here. Please make yourself comfortable.</p>
+                <p>I love web dev, experimenting with new tools, and making things that feel good to use.</p>
+              </div>
+              <p className="text-[var(--text)]">
+                Want to chat?{' '}
+                <Link href="/contact" className="underline text-[var(--link)] hover:text-[var(--link-hover)] animated-link">
+                  Drop me a line
+                </Link>
+              </p>
+            </>
+          )}
           {/* Tech Stack Icons */}
           <div className="pt-4">
             <TechStack />
@@ -169,11 +194,19 @@ export default async function HomePage() {
         </section>
       </AnimatedSection>
 
-      {/* GitHub Section - At the bottom */}
+      {/* GitHub Section */}
       <AnimatedSection delay={0.8}>
         <section className="space-y-4">
           <h2 className="text-xl font-bold">GitHub Activity</h2>
           <GitHubStats />
+        </section>
+      </AnimatedSection>
+
+      {/* NASA APOD Section */}
+      <AnimatedSection delay={0.9}>
+        <section className="space-y-4">
+          <h2 className="text-xl font-bold">From NASA</h2>
+          <NasaApod />
         </section>
       </AnimatedSection>
     </div>

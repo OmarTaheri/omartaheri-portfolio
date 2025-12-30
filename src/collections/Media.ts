@@ -38,6 +38,14 @@ export const Media: CollectionConfig = {
         },
       }),
     },
+    {
+      name: 'subtitle',
+      type: 'text',
+      label: 'Subtitle / Tagline',
+      admin: {
+        description: 'A short subtitle or tagline for this image',
+      },
+    },
   ],
   upload: {
     // Upload to the public/media directory in Next.js making them publicly accessible even outside of Payload
