@@ -107,44 +107,22 @@ export default async function HomePage() {
         <section className="space-y-4">
           <ZelligeThemeIcon themeName="green" />
           <h2 className="font-bold">Projects</h2>
-          <div className="space-y-2">
-            {homeData?.projects && homeData.projects.length > 0 ? (
-              homeData.projects.map((project, index) => {
-                const linkedPost = project.linkedPost && typeof project.linkedPost === 'object' ? project.linkedPost : null
-                const postUrl = linkedPost?.slug ? `/blog/${linkedPost.slug}` : null
-
-                return (
-                  <AnimatedSection key={index} delay={0.4 + index * 0.1}>
-                    <div className="text-[var(--text)]">
-                      {postUrl ? (
-                        <Link href={postUrl} className="font-bold text-[var(--title)] hover:text-[var(--link-hover)] animated-link">
-                          {project.name}
-                        </Link>
-                      ) : (
-                        <span className="font-bold text-[var(--title)]">{project.name}</span>
-                      )}{' '}
-                      <span>{project.description}</span>
-                    </div>
-                  </AnimatedSection>
-                )
-              })
-            ) : (
-              <>
-                <AnimatedSection delay={0.4}>
-                  <div className="text-[var(--text)]">
-                    <span className="font-bold text-[var(--title)]">Mechatronics website</span>{' '}
-                    <span>A minimal website for a uni club</span>
-                  </div>
-                </AnimatedSection>
-                <AnimatedSection delay={0.5}>
-                  <div className="text-[var(--text)]">
-                    <span className="font-bold text-[var(--title)]">Go Planner</span>{' '}
-                    <span>A degree planer service for students using AI</span>
-                  </div>
-                </AnimatedSection>
-              </>
-            )}
-          </div>
+          {homeData?.projectsContent ? (
+            <div className="prose prose-invert max-w-none text-[var(--text)]">
+              <RichText data={homeData.projectsContent} enableGutter={false} />
+            </div>
+          ) : (
+            <div className="space-y-2 text-[var(--text)]">
+              <p>
+                <span className="font-bold text-[var(--title)]">Mechatronics website</span>{' '}
+                — A minimal website for a uni club
+              </p>
+              <p>
+                <span className="font-bold text-[var(--title)]">Go Planner</span>{' '}
+                — A degree planer service for students using AI
+              </p>
+            </div>
+          )}
         </section>
       </AnimatedSection>
 

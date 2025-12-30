@@ -1,9 +1,11 @@
 import type { GlobalConfig } from 'payload'
 import {
+  BlocksFeature,
   FixedToolbarFeature,
   InlineToolbarFeature,
   lexicalEditor,
 } from '@payloadcms/richtext-lexical'
+import { MediaBlock } from '../../blocks/MediaBlock/config'
 import { revalidateHome } from './hooks/revalidateHome'
 
 export const Home: GlobalConfig = {
@@ -39,41 +41,32 @@ export const Home: GlobalConfig = {
       type: 'richText',
       label: 'Intro Content',
       admin: {
-        description: 'Intro text with links. Use the link feature to add CTAs.',
+        description: 'Intro text with images and links.',
       },
       editor: lexicalEditor({
         features: ({ rootFeatures }) => [
           ...rootFeatures,
+          BlocksFeature({ blocks: [MediaBlock] }),
           FixedToolbarFeature(),
           InlineToolbarFeature(),
         ],
       }),
     },
     {
-      name: 'projects',
-      type: 'array',
-      label: 'Projects',
-      fields: [
-        {
-          name: 'name',
-          type: 'text',
-          required: true,
-        },
-        {
-          name: 'description',
-          type: 'text',
-          required: true,
-        },
-        {
-          name: 'linkedPost',
-          type: 'relationship',
-          relationTo: 'posts',
-          label: 'Link to Post (optional)',
-          admin: {
-            description: 'If set, the project name will link to this post',
-          },
-        },
-      ],
+      name: 'projectsContent',
+      type: 'richText',
+      label: 'Projects Content',
+      admin: {
+        description: 'Write freely about your projects with paragraphs, images, and links.',
+      },
+      editor: lexicalEditor({
+        features: ({ rootFeatures }) => [
+          ...rootFeatures,
+          BlocksFeature({ blocks: [MediaBlock] }),
+          FixedToolbarFeature(),
+          InlineToolbarFeature(),
+        ],
+      }),
     },
   ],
   hooks: {
