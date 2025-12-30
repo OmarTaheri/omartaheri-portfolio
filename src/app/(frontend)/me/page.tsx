@@ -49,8 +49,7 @@ export default async function MePage() {
         <div className="relative w-full max-w-md">
           <DitherCanvas
             imageSrc={profileImage}
-            width={400}
-            height={500}
+            maxWidth={400}
             className="w-full"
           />
         </div>

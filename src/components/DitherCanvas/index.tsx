@@ -7,8 +7,7 @@ import Image from 'next/image'
 
 interface DitherCanvasProps {
   imageSrc: string
-  width?: number
-  height?: number
+  maxWidth?: number
   className?: string
 }
 
@@ -34,10 +33,17 @@ const palettes: Record<Theme, number[][]> = {
   ],
 }
 
-const fragmentShader = `
+const vertexShaderSource = `
+attribute vec2 a_position;
+void main() {
+  gl_Position = vec4(a_position, 0.0, 1.0);
+}
+`
+
+// Static dithering shader - no time-based animation for smooth display
+const fragmentShaderSource = `
 precision mediump float;
 
-uniform float u_time;
 uniform vec2 u_resolution;
 uniform sampler2D u_image;
 uniform float u_pixelSize;
@@ -78,8 +84,8 @@ void main() {
   float lum = luminance(color);
   lum = pow(lum, 1.0 / u_exposure);
 
-  float timeOffset = sin(u_time * 2.0) * 0.5 + 0.5;
-  float dither = bayer4x4(pixelCoord / u_pixelSize + timeOffset * u_dither);
+  // Static dither pattern - no animation
+  float dither = bayer4x4(pixelCoord / u_pixelSize);
   float threshold = lum + (dither - 0.5) * u_dither * 0.5;
 
   vec3 finalColor;
@@ -99,68 +105,88 @@ void main() {
 
 export const DitherCanvas = ({
   imageSrc,
-  width = 400,
-  height = 500,
+  maxWidth = 400,
   className = '',
 }: DitherCanvasProps) => {
   const canvasRef = useRef<HTMLCanvasElement>(null)
   const glRef = useRef<WebGLRenderingContext | null>(null)
   const programRef = useRef<WebGLProgram | null>(null)
-  const animationRef = useRef<number>(0)
   const textureRef = useRef<WebGLTexture | null>(null)
-  const imageLoadedRef = useRef(false)
+  const uniformsRef = useRef<Record<string, WebGLUniformLocation | null>>({})
 
   const { theme } = useTheme()
-  const [isHovered, setIsHovered] = useState(false)
   const [showControls, setShowControls] = useState(false)
-  const [pixelSize, setPixelSize] = useState(3)
+  const [pixelSize, setPixelSize] = useState(1) // Default to 1 for smooth look
   const [exposure, setExposure] = useState(1.2)
   const [ditherAmount, setDitherAmount] = useState(1.0)
-  const [isLoading, setIsLoading] = useState(true)
+  const [isReady, setIsReady] = useState(false)
   const [hasError, setHasError] = useState(false)
+  const [dimensions, setDimensions] = useState({ width: maxWidth, height: maxWidth })
 
   const palette = palettes[theme || 'blue']
 
+  // Compile shader helper
+  const compileShader = useCallback(
+    (gl: WebGLRenderingContext, type: number, source: string): WebGLShader | null => {
+      const shader = gl.createShader(type)
+      if (!shader) return null
+
+      gl.shaderSource(shader, source)
+      gl.compileShader(shader)
+
+      if (!gl.getShaderParameter(shader, gl.COMPILE_STATUS)) {
+        console.error('Shader compile error:', gl.getShaderInfoLog(shader))
+        gl.deleteShader(shader)
+        return null
+      }
+
+      return shader
+    },
+    [],
+  )
+
+  // Initialize WebGL
   const initWebGL = useCallback(() => {
     const canvas = canvasRef.current
-    if (!canvas) return
+    if (!canvas) return false
 
-    const gl = canvas.getContext('webgl', { preserveDrawingBuffer: true })
+    const gl = canvas.getContext('webgl', {
+      preserveDrawingBuffer: true,
+      alpha: false,
+    })
+
     if (!gl) {
       console.error('WebGL not supported')
-      setHasError(true)
-      return
+      return false
     }
+
     glRef.current = gl
 
-    const vertexShaderSource = `
-      attribute vec2 a_position;
-      void main() {
-        gl_Position = vec4(a_position, 0.0, 1.0);
-      }
-    `
+    // Compile shaders
+    const vertexShader = compileShader(gl, gl.VERTEX_SHADER, vertexShaderSource)
+    const fragmentShader = compileShader(gl, gl.FRAGMENT_SHADER, fragmentShaderSource)
 
-    const vertexShader = gl.createShader(gl.VERTEX_SHADER)!
-    gl.shaderSource(vertexShader, vertexShaderSource)
-    gl.compileShader(vertexShader)
-
-    const fragShader = gl.createShader(gl.FRAGMENT_SHADER)!
-    gl.shaderSource(fragShader, fragmentShader)
-    gl.compileShader(fragShader)
-
-    if (!gl.getShaderParameter(fragShader, gl.COMPILE_STATUS)) {
-      console.error('Fragment shader error:', gl.getShaderInfoLog(fragShader))
-      setHasError(true)
-      return
+    if (!vertexShader || !fragmentShader) {
+      return false
     }
 
-    const program = gl.createProgram()!
+    // Create program
+    const program = gl.createProgram()
+    if (!program) return false
+
     gl.attachShader(program, vertexShader)
-    gl.attachShader(program, fragShader)
+    gl.attachShader(program, fragmentShader)
     gl.linkProgram(program)
+
+    if (!gl.getProgramParameter(program, gl.LINK_STATUS)) {
+      console.error('Program link error:', gl.getProgramInfoLog(program))
+      return false
+    }
+
     gl.useProgram(program)
     programRef.current = program
 
+    // Setup geometry (fullscreen quad)
     const positions = new Float32Array([-1, -1, 1, -1, -1, 1, 1, 1])
     const buffer = gl.createBuffer()
     gl.bindBuffer(gl.ARRAY_BUFFER, buffer)
@@ -170,46 +196,30 @@ export const DitherCanvas = ({
     gl.enableVertexAttribArray(positionLoc)
     gl.vertexAttribPointer(positionLoc, 2, gl.FLOAT, false, 0, 0)
 
-    // Load image
-    const image = new window.Image()
-    image.crossOrigin = 'anonymous'
-
-    image.onload = () => {
-      if (!gl) return
-      const texture = gl.createTexture()
-      gl.bindTexture(gl.TEXTURE_2D, texture)
-      gl.texImage2D(gl.TEXTURE_2D, 0, gl.RGBA, gl.RGBA, gl.UNSIGNED_BYTE, image)
-      gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_WRAP_S, gl.CLAMP_TO_EDGE)
-      gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_WRAP_T, gl.CLAMP_TO_EDGE)
-      gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MIN_FILTER, gl.LINEAR)
-      gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MAG_FILTER, gl.LINEAR)
-      textureRef.current = texture
-      imageLoadedRef.current = true
-      setIsLoading(false)
+    // Cache uniform locations
+    uniformsRef.current = {
+      u_resolution: gl.getUniformLocation(program, 'u_resolution'),
+      u_pixelSize: gl.getUniformLocation(program, 'u_pixelSize'),
+      u_exposure: gl.getUniformLocation(program, 'u_exposure'),
+      u_dither: gl.getUniformLocation(program, 'u_dither'),
+      u_c0: gl.getUniformLocation(program, 'u_c0'),
+      u_c1: gl.getUniformLocation(program, 'u_c1'),
+      u_c2: gl.getUniformLocation(program, 'u_c2'),
+      u_c3: gl.getUniformLocation(program, 'u_c3'),
+      u_image: gl.getUniformLocation(program, 'u_image'),
     }
 
-    image.onerror = () => {
-      console.error('Failed to load image:', imageSrc)
-      setHasError(true)
-      setIsLoading(false)
-    }
+    return true
+  }, [compileShader])
 
-    // Handle both absolute URLs and relative paths
-    if (imageSrc.startsWith('http') || imageSrc.startsWith('//')) {
-      image.src = imageSrc
-    } else {
-      // For local images, use the full URL
-      image.src = imageSrc
-    }
-  }, [imageSrc])
-
+  // Render once (static, no animation loop)
   const render = useCallback(() => {
     const gl = glRef.current
     const program = programRef.current
     const canvas = canvasRef.current
+    const uniforms = uniformsRef.current
 
     if (!gl || !program || !canvas || !textureRef.current) {
-      animationRef.current = requestAnimationFrame(render)
       return
     }
 
@@ -217,54 +227,103 @@ export const DitherCanvas = ({
     gl.clearColor(0, 0, 0, 1)
     gl.clear(gl.COLOR_BUFFER_BIT)
 
-    gl.uniform1f(gl.getUniformLocation(program, 'u_time'), performance.now() / 1000)
-    gl.uniform2f(gl.getUniformLocation(program, 'u_resolution'), canvas.width, canvas.height)
-    gl.uniform1f(gl.getUniformLocation(program, 'u_pixelSize'), pixelSize)
-    gl.uniform1f(gl.getUniformLocation(program, 'u_exposure'), exposure)
-    gl.uniform1f(gl.getUniformLocation(program, 'u_dither'), ditherAmount)
+    // Set uniforms
+    gl.uniform2f(uniforms.u_resolution, canvas.width, canvas.height)
+    gl.uniform1f(uniforms.u_pixelSize, pixelSize)
+    gl.uniform1f(uniforms.u_exposure, exposure)
+    gl.uniform1f(uniforms.u_dither, ditherAmount)
 
-    gl.uniform3f(gl.getUniformLocation(program, 'u_c0'), palette[0][0] / 255, palette[0][1] / 255, palette[0][2] / 255)
-    gl.uniform3f(gl.getUniformLocation(program, 'u_c1'), palette[1][0] / 255, palette[1][1] / 255, palette[1][2] / 255)
-    gl.uniform3f(gl.getUniformLocation(program, 'u_c2'), palette[2][0] / 255, palette[2][1] / 255, palette[2][2] / 255)
-    gl.uniform3f(gl.getUniformLocation(program, 'u_c3'), palette[3][0] / 255, palette[3][1] / 255, palette[3][2] / 255)
+    // Set palette colors
+    gl.uniform3f(uniforms.u_c0, palette[0][0] / 255, palette[0][1] / 255, palette[0][2] / 255)
+    gl.uniform3f(uniforms.u_c1, palette[1][0] / 255, palette[1][1] / 255, palette[1][2] / 255)
+    gl.uniform3f(uniforms.u_c2, palette[2][0] / 255, palette[2][1] / 255, palette[2][2] / 255)
+    gl.uniform3f(uniforms.u_c3, palette[3][0] / 255, palette[3][1] / 255, palette[3][2] / 255)
 
-    gl.uniform1i(gl.getUniformLocation(program, 'u_image'), 0)
+    // Bind texture
+    gl.uniform1i(uniforms.u_image, 0)
     gl.activeTexture(gl.TEXTURE0)
     gl.bindTexture(gl.TEXTURE_2D, textureRef.current)
 
+    // Draw
     gl.drawArrays(gl.TRIANGLE_STRIP, 0, 4)
-
-    animationRef.current = requestAnimationFrame(render)
   }, [pixelSize, exposure, ditherAmount, palette])
 
+  // Load image and set up texture
   useEffect(() => {
-    initWebGL()
-    return () => {
-      if (animationRef.current) {
-        cancelAnimationFrame(animationRef.current)
+    const image = new window.Image()
+    image.crossOrigin = 'anonymous'
+
+    image.onload = () => {
+      // Calculate dimensions preserving aspect ratio
+      const aspectRatio = image.naturalHeight / image.naturalWidth
+      const width = Math.min(maxWidth, image.naturalWidth)
+      const height = Math.round(width * aspectRatio)
+
+      setDimensions({ width, height })
+
+      // Initialize WebGL after we know dimensions
+      const canvas = canvasRef.current
+      if (canvas) {
+        canvas.width = width
+        canvas.height = height
+
+        const success = initWebGL()
+        if (!success) {
+          setHasError(true)
+          return
+        }
+
+        const gl = glRef.current
+        if (!gl) return
+
+        // Create and upload texture
+        const texture = gl.createTexture()
+        gl.bindTexture(gl.TEXTURE_2D, texture)
+        gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_WRAP_S, gl.CLAMP_TO_EDGE)
+        gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_WRAP_T, gl.CLAMP_TO_EDGE)
+        gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MIN_FILTER, gl.LINEAR)
+        gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MAG_FILTER, gl.LINEAR)
+        gl.texImage2D(gl.TEXTURE_2D, 0, gl.RGBA, gl.RGBA, gl.UNSIGNED_BYTE, image)
+
+        textureRef.current = texture
+        setIsReady(true)
       }
     }
-  }, [initWebGL])
 
-  useEffect(() => {
-    animationRef.current = requestAnimationFrame(render)
-    return () => {
-      if (animationRef.current) {
-        cancelAnimationFrame(animationRef.current)
-      }
+    image.onerror = () => {
+      console.error('Failed to load image:', imageSrc)
+      setHasError(true)
     }
-  }, [render])
 
-  // Show fallback image if WebGL fails
+    // Handle src
+    if (imageSrc.startsWith('/')) {
+      if (typeof window !== 'undefined') {
+        image.src = `${window.location.origin}${imageSrc}`
+      } else {
+        image.src = imageSrc
+      }
+    } else {
+      image.src = imageSrc
+    }
+  }, [imageSrc, maxWidth, initWebGL])
+
+  // Re-render when settings or palette change
+  useEffect(() => {
+    if (isReady) {
+      render()
+    }
+  }, [isReady, render])
+
+  // Fallback to regular image if WebGL fails
   if (hasError) {
     return (
       <div className={className}>
         <Image
           src={imageSrc}
           alt="Profile"
-          width={width}
-          height={height}
-          className="w-full h-auto object-cover"
+          width={dimensions.width}
+          height={dimensions.height}
+          className="w-full h-auto object-contain"
           priority
         />
       </div>
@@ -272,39 +331,40 @@ export const DitherCanvas = ({
   }
 
   return (
-    <div
-      className={`relative ${className}`}
-      onMouseEnter={() => setIsHovered(true)}
-      onMouseLeave={() => {
-        setIsHovered(false)
-        setShowControls(false)
-      }}
-    >
-      {/* Loading state */}
-      {isLoading && (
+    <div className={`relative ${className}`}>
+      {/* Loading placeholder */}
+      {!isReady && (
         <div
-          className="absolute inset-0 bg-[var(--background)] animate-pulse flex items-center justify-center"
-          style={{ width, height }}
+          className="bg-[var(--card)] animate-pulse flex items-center justify-center"
+          style={{ width: dimensions.width, height: dimensions.height }}
         >
-          <span className="text-[var(--link)]">Loading...</span>
+          <span className="text-[var(--link)] text-sm">Loading...</span>
         </div>
       )}
 
       <canvas
         ref={canvasRef}
-        width={width}
-        height={height}
-        className={`w-full h-auto ${isLoading ? 'opacity-0' : 'opacity-100'} transition-opacity duration-300`}
+        width={dimensions.width}
+        height={dimensions.height}
+        className={`w-full h-auto transition-opacity duration-300 ${isReady ? 'opacity-100' : 'opacity-0'}`}
+        style={{ display: isReady ? 'block' : 'none' }}
       />
 
-      {/* Settings button - appears on hover */}
-      {isHovered && !showControls && (
+      {/* Settings button - always visible when ready */}
+      {!showControls && isReady && (
         <button
           onClick={() => setShowControls(true)}
-          className="absolute bottom-4 right-4 w-10 h-10 rounded-full bg-[var(--background)] border border-[var(--border)] flex items-center justify-center text-[var(--link)] hover:text-[var(--link-hover)] hover:border-[var(--link-hover)] transition-all hover-scale"
+          className="absolute bottom-4 right-4 w-10 h-10 rounded-full bg-[var(--background)] border border-[var(--border)] flex items-center justify-center text-[var(--link)] hover:text-[var(--link-hover)] hover:border-[var(--link-hover)] transition-all opacity-70 hover:opacity-100"
           aria-label="Open dither settings"
         >
-          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+          <svg
+            width="20"
+            height="20"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            strokeWidth="2"
+          >
             <circle cx="12" cy="12" r="3" />
             <path d="M12 1v4M12 19v4M4.22 4.22l2.83 2.83M16.95 16.95l2.83 2.83M1 12h4M19 12h4M4.22 19.78l2.83-2.83M16.95 7.05l2.83-2.83" />
           </svg>
@@ -321,7 +381,14 @@ export const DitherCanvas = ({
               className="text-[var(--link)] hover:text-[var(--link-hover)] transition-colors"
               aria-label="Close settings"
             >
-              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+              <svg
+                width="16"
+                height="16"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                strokeWidth="2"
+              >
                 <line x1="18" y1="6" x2="6" y2="18" />
                 <line x1="6" y1="6" x2="18" y2="18" />
               </svg>
