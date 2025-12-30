@@ -140,6 +140,12 @@
     color: var(--title);
   }
 
+  h2 {
+    font-size: 2rem;
+    margin-top: 0;
+    padding-top: 0;
+  }
+
   a {
     color: var(--link);
     transition: color 0.2s ease;

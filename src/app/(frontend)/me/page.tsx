@@ -1,11 +1,11 @@
 import { getPayload } from 'payload'
 import config from '@payload-config'
-import Image from 'next/image'
 import type { Metadata } from 'next'
 import RichText from '@/components/RichText'
 import { AnimatedSection } from '@/components/AnimatedSection'
 import { AnimatedText } from '@/components/AnimatedText'
 import { EasterEggs } from '@/components/EasterEggs'
+import { DitherCanvas } from '@/components/DitherCanvas'
 
 export const dynamic = 'force-dynamic'
 
@@ -44,16 +44,14 @@ export default async function MePage() {
         </AnimatedSection>
       </header>
 
-      {/* Profile Image */}
+      {/* Profile Image with Dithering Effect */}
       <AnimatedSection delay={0.15} direction="left">
         <div className="relative w-full max-w-md">
-          <Image
-            src={profileImage}
-            alt="Omar Taheri"
+          <DitherCanvas
+            imageSrc={profileImage}
             width={400}
             height={500}
-            className="w-full h-auto object-cover hover-scale"
-            priority
+            className="w-full"
           />
         </div>
       </AnimatedSection>
