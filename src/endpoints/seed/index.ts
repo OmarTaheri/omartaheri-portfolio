@@ -307,9 +307,7 @@ export const seed = async ({
     data: {
       name: 'Omar Taheri',
       tagline: 'Builds for the web obsessed with AI',
-      intro: "Hi, I'm Omar Taheri and welcome to my digital corner. I'm happy you're here. Please make yourself comfortable.\nI love web dev, experimenting with new tools, and making things that feel good to use.",
-      ctaText: 'Want to chat?',
-      ctaLink: 'Drop me a line',
+      // introContent is a rich text field - will use fallback content or populate via admin
       projects: [
         {
           name: 'JWT Authentication Guide',
