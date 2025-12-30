@@ -130,6 +130,7 @@ const config = {
               h2: {
                 fontSize: '1.25rem',
                 fontWeight: 600,
+                marginTop: 0,
               },
             },
           ],
