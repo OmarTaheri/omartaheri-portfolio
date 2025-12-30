@@ -107,14 +107,9 @@ export default async function HomePage() {
         <section className="space-y-4">
           <ZelligeThemeIcon themeName="green" />
           <h2 className="font-bold">Projects</h2>
-          {homeData?.projects && homeData.projects.length > 0 ? (
-            <div className="space-y-2 text-[var(--text)]">
-              {homeData.projects.map((project) => (
-                <p key={project.id}>
-                  <span className="font-bold text-[var(--title)]">{project.name}</span>{' '}
-                  — {project.description}
-                </p>
-              ))}
+          {homeData?.projectsContent ? (
+            <div className="prose prose-invert max-w-none text-[var(--text)]">
+              <RichText data={homeData.projectsContent} enableGutter={false} />
             </div>
           ) : (
             <div className="space-y-2 text-[var(--text)]">

@@ -1711,7 +1711,7 @@ export interface Home {
   profileGif?: (number | null) | Media;
   tagline: string;
   /**
-   * Intro text with links. Use the link feature to add CTAs.
+   * Intro text with images and links.
    */
   introContent?: {
     root: {
@@ -1728,17 +1728,24 @@ export interface Home {
     };
     [k: string]: unknown;
   } | null;
-  projects?:
-    | {
-        name: string;
-        description: string;
-        /**
-         * If set, the project name will link to this post
-         */
-        linkedPost?: (number | null) | Post;
-        id?: string | null;
-      }[]
-    | null;
+  /**
+   * Write freely about your projects with paragraphs, images, and links.
+   */
+  projectsContent?: {
+    root: {
+      type: string;
+      children: {
+        type: any;
+        version: number;
+        [k: string]: unknown;
+      }[];
+      direction: ('ltr' | 'rtl') | null;
+      format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+      indent: number;
+      version: number;
+    };
+    [k: string]: unknown;
+  } | null;
   updatedAt?: string | null;
   createdAt?: string | null;
 }
@@ -1843,14 +1850,7 @@ export interface HomeSelect<T extends boolean = true> {
   profileGif?: T;
   tagline?: T;
   introContent?: T;
-  projects?:
-    | T
-    | {
-        name?: T;
-        description?: T;
-        linkedPost?: T;
-        id?: T;
-      };
+  projectsContent?: T;
   updatedAt?: T;
   createdAt?: T;
   globalType?: T;
