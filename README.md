@@ -74,32 +74,6 @@ Payload uses PostgreSQL through its `@payloadcms/db-postgres` adapter, which mea
 - Migrations keep track of database changes
 - No manual SQL needed (unless you want to!)
 
-### Working with the Database
-
-For local development, just run PostgreSQL locally (Docker makes this easy):
-
-```bash
-# Start the database
-docker-compose up -d
-
-# Create a migration after schema changes
-pnpm payload migrate:create
-
-# Run pending migrations
-pnpm payload migrate
-```
-
----
-
-## 🚀 Getting Started
-
-Want to run this locally? Here's how:
-
-### Prerequisites
-
-- 📦 Node.js 18.20+ or 20.9+
-- 📦 pnpm 9 or 10
-- 🐘 PostgreSQL 16 (or use Docker)
 
 ### Installation
 
@@ -148,19 +122,6 @@ omartaheri/
 
 ---
 
-## ✨ Features
-
-- 🎨 **Beautiful Design** - Modern, clean, and responsive
-- 🌙 **Dark Mode** - Easy on the eyes
-- 📝 **Blog** - Full-featured blog with categories
-- 🔍 **Search** - Find content easily
-- 📱 **Responsive** - Looks great on all devices
-- ⚡ **Fast** - Optimized for performance
-- 🔄 **Live Preview** - See changes as you edit
-- 📊 **SEO Optimized** - Built-in SEO tools
-
----
-
 ## 🤝 Contributing
 
 As I mentioned, this is my personal portfolio, so I'm not actively looking for contributions. But if you spot a bug or have a suggestion, feel free to open an issue! I appreciate the help. 💚
@@ -172,14 +133,6 @@ As I mentioned, this is my personal portfolio, so I'm not actively looking for c
 This project is licensed under the **MIT License** - see the [LICENSE](LICENSE) file for details.
 
 Basically, do whatever you want with it! Just don't blame me if something breaks. 😅
-
----
-
-## 👤 Author
-
-**Omar Taheri**
-
-- 🌐 Website: [omartaheri.com](https://omartaheri.com)
 
 ---
 
