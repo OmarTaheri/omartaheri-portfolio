@@ -1,141 +1,107 @@
-# 👋 Omar Taheri's Portfolio
+# omartaheri.com
 
-[![MIT License](https://img.shields.io/badge/License-MIT-green.svg)](https://choosealicense.com/licenses/mit/)
-[![Next.js](https://img.shields.io/badge/Next.js-15.4-black?logo=next.js)](https://nextjs.org/)
-[![Payload CMS](https://img.shields.io/badge/Payload-3.69-blue?logo=data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAyNCAyNCI+PHBhdGggZmlsbD0id2hpdGUiIGQ9Ik0xMiAyTDIgNy4zNHYxMC4yNmwxMCA1LjI2IDEwLTUuMjZWNy4zNEwxMiAyeiIvPjwvc3ZnPg==)](https://payloadcms.com/)
-[![PostgreSQL](https://img.shields.io/badge/PostgreSQL-16-336791?logo=postgresql&logoColor=white)](https://www.postgresql.org/)
-[![TypeScript](https://img.shields.io/badge/TypeScript-5.9-3178C6?logo=typescript&logoColor=white)](https://www.typescriptlang.org/)
-[![TailwindCSS](https://img.shields.io/badge/Tailwind-3.4-38B2AC?logo=tailwind-css&logoColor=white)](https://tailwindcss.com/)
+The source for my portfolio, project archive, and blog at [omartaheri.com](https://omartaheri.com).
 
----
+The site uses Next.js and Payload CMS in one TypeScript codebase. Payload manages pages, posts, media, navigation, forms, and SEO metadata; PostgreSQL stores the content.
 
-**🌐 Visit the live site: [omartaheri.com](https://omartaheri.com)**
+<!-- Add desktop and mobile screenshots here. -->
 
----
+## Highlights
 
-## 📝 About This Project
+- CMS-managed portfolio pages and project content
+- blog with categories, drafts, and rich-text editing
+- responsive media and SEO metadata
+- Payload administration interface
+- search, redirects, forms, and sitemap generation
+- light/dark visual themes with Moroccan zellige-inspired details
+- integration tests with Vitest
+- browser tests with Playwright
 
-Hey there! 👋 This is my personal portfolio website. I built it to showcase my work, share some thoughts through blog posts, and have a nice little corner of the internet to call my own.
+## Stack
 
-> ⚠️ **Heads up!** This is primarily built for **my personal use**, but hey, if you find it useful, feel free to fork it, learn from it, or use it as a starting point for your own portfolio. Just don't be surprised if some things are very specific to my needs! 😄
+- Next.js 15
+- React 19
+- Payload CMS 3
+- PostgreSQL
+- TypeScript
+- Tailwind CSS
+- Vitest and Playwright
 
----
+## Local development
 
-## 🛠️ Tech Stack
+### Prerequisites
 
-This portfolio is powered by some really cool technologies:
+- Node.js 20+
+- pnpm 9 or 10
+- PostgreSQL
 
-| Technology | Purpose |
-|------------|---------|
-| ⚡ **Next.js 15** | React framework for the frontend |
-| 📦 **Payload CMS** | Headless CMS for content management |
-| 🐘 **PostgreSQL** | Database for storing all content |
-| 🎨 **TailwindCSS** | Styling and design |
-| 🔤 **TypeScript** | Type-safe development |
-| 🎭 **Framer Motion** | Smooth animations |
+### Setup
 
----
-
-## 📦 What is Payload CMS?
-
-If you're not familiar with [Payload CMS](https://payloadcms.com/), let me give you a quick rundown! 🚀
-
-Payload is a **headless CMS** built with TypeScript and Node.js. What makes it special is that it:
-
-- **Lives in your codebase** - No external services needed, it runs right alongside your Next.js app
-- **Has an amazing admin panel** - Beautiful, intuitive, and fully customizable
-- **Supports everything out of the box** - Authentication, access control, file uploads, rich text editing, and more
-- **Is developer-friendly** - Define your content schema in code using TypeScript
-
-In this project, Payload handles:
-- 📄 **Pages** - Dynamic page content with a drag-and-drop layout builder
-- ✍️ **Posts** - Blog posts with rich text editing (powered by Lexical)
-- 🖼️ **Media** - Image uploads with automatic optimization
-- 🏷️ **Categories** - Post organization and taxonomy
-- 🔍 **SEO** - Meta tags, Open Graph, and more
-
-The admin panel is accessible at `/admin` and gives me full control over all the content without touching code!
-
----
-
-## 🐘 What's PostgreSQL Doing Here?
-
-Great question! PostgreSQL is the **database** powering everything behind the scenes.
-
-Every piece of content you see on the website - pages, posts, images, user accounts - it all lives in PostgreSQL. Here's why I chose it:
-
-- 📊 **Reliable & Battle-tested** - PostgreSQL has been around for decades and is rock solid
-- 🔐 **ACID Compliant** - Your data is safe and consistent
-- 🚀 **Fast** - Query performance is excellent
-- 🌐 **Widely Supported** - Easy to host anywhere (Vercel, Railway, Neon, self-hosted)
-
-Payload uses PostgreSQL through its `@payloadcms/db-postgres` adapter, which means:
-- Schema is defined in code and auto-generated
-- Migrations keep track of database changes
-- No manual SQL needed (unless you want to!)
-
-
-### Installation
-
-1. **Clone the repository**
-   ```bash
-   git clone https://github.com/yourusername/omartaheri.git
-   cd omartaheri
-   ```
-
-2. **Set up environment variables**
-   ```bash
-   cp .env.example .env
-   # Then edit .env with your database credentials
-   ```
-
-3. **Install dependencies**
-   ```bash
-   pnpm install
-   ```
-
-4. **Start the dev server**
-   ```bash
-   pnpm dev
-   ```
-
-5. **Open your browser**
-   
-   Visit `http://localhost:3000` and you're good to go! 🎉
-
----
-
-## 📁 Project Structure
-
-```
-omartaheri/
-├── 📂 src/
-│   ├── 📂 app/          # Next.js app router pages
-│   ├── 📂 components/   # React components
-│   ├── 📂 blocks/       # Payload layout blocks
-│   ├── 📂 collections/  # Payload collections (content schemas)
-│   └── 📂 globals/      # Payload globals (header, footer)
-├── 📂 public/           # Static assets
-├── 📄 payload.config.ts # Payload CMS configuration
-└── 📄 next.config.js    # Next.js configuration
+```bash
+git clone https://github.com/OmarTaheri/omartaheri-portfolio.git
+cd omartaheri-portfolio
+pnpm install
+cp .env.example .env
 ```
 
----
+Configure the required values:
 
-## 🤝 Contributing
+```dotenv
+DATABASE_URL=postgresql://user:password@localhost:5432/omartaheri
+PAYLOAD_SECRET=generate-a-long-random-value
+NEXT_PUBLIC_SERVER_URL=http://localhost:3000
+CRON_SECRET=generate-another-random-value
+PREVIEW_SECRET=generate-another-random-value
+```
 
-As I mentioned, this is my personal portfolio, so I'm not actively looking for contributions. But if you spot a bug or have a suggestion, feel free to open an issue! I appreciate the help. 💚
+Start the development server:
 
----
+```bash
+pnpm dev
+```
 
-## 📄 License
+Open:
 
-This project is licensed under the **MIT License** - see the [LICENSE](LICENSE) file for details.
+- site: <http://localhost:3000>
+- Payload admin: <http://localhost:3000/admin>
 
-Basically, do whatever you want with it! Just don't blame me if something breaks. 😅
+## Quality checks
 
----
+```bash
+pnpm lint
+pnpm test:int
+pnpm test:e2e
+pnpm build
+```
 
-<p align="center">
-  Made with ❤️ and lots of ☕
-</p>
+## Project structure
+
+```text
+src/
+├── app/          Next.js routes and Payload admin
+├── blocks/       CMS page-building blocks
+├── collections/  Payload content collections
+├── components/   site UI
+├── globals/      global CMS configuration
+└── payload.config.ts
+```
+
+## Design decisions
+
+- **One codebase:** the site and CMS share types, deployment, and content models.
+- **Content over hard-coding:** projects and posts can be updated without a code release.
+- **Server-rendered content:** project and blog pages remain indexable and shareable.
+- **Progressive personality:** visual details and small interactions support the content instead of replacing it.
+
+## Deployment
+
+Production requires:
+
+- a PostgreSQL database;
+- persistent media storage or an external storage adapter;
+- unique secrets for Payload, previews, and cron jobs;
+- `NEXT_PUBLIC_SERVER_URL` set to the canonical HTTPS origin.
+
+## License
+
+No open-source license is currently included. Add a license before inviting reuse or claiming that the project is MIT-licensed.
