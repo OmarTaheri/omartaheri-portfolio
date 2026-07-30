@@ -366,10 +366,6 @@ address {
 
 .movable-shell[data-dragging="true"] {
   will-change: translate;
-}
-
-.movable-shell[data-dragging="true"] {
-  z-index: 1000;
   cursor: grabbing;
   user-select: none;
 }
@@ -548,45 +544,14 @@ address {
 }
 
 .header-reset[data-reset-active="true"] {
-  border-color: var(--rust-bright);
-  background:
-    radial-gradient(
-      circle at 28% 18%,
-      rgba(255, 255, 255, 0.2),
-      transparent 38%
-    ),
-    linear-gradient(135deg, var(--rust-bright), var(--rust));
-  box-shadow:
-    inset 0 1px 0 rgba(255, 255, 255, 0.18),
-    0 0 0 1px color-mix(in srgb, var(--rust) 46%, transparent),
-    0 0 22px color-mix(in srgb, var(--rust-bright) 42%, transparent);
+  border-color: var(--rust);
+  background: var(--rust);
   color: #fff5e6;
-  text-shadow: 0 1px 1px rgba(42, 8, 2, 0.45);
-  animation: reset-pulse 2.4s ease-in-out infinite;
 }
 
-.header-reset[data-reset-active="true"]::before {
-  border-color: color-mix(in srgb, var(--rust-bright) 72%, transparent);
-  background:
-    radial-gradient(circle at 50% 0, var(--rust-bright) 0 2px, transparent 3px),
-    radial-gradient(circle at 50% 100%, var(--rust-bright) 0 2px, transparent 3px),
-    radial-gradient(circle at 0 50%, var(--rust-bright) 0 2px, transparent 3px),
-    radial-gradient(circle at 100% 50%, var(--rust-bright) 0 2px, transparent 3px);
-  animation: reset-ring 7s linear infinite;
-}
-
-@keyframes reset-pulse {
-  50% {
-    box-shadow:
-      0 0 0 2px color-mix(in srgb, var(--rust) 58%, transparent),
-      0 0 32px color-mix(in srgb, var(--rust-bright) 58%, transparent);
-  }
-}
-
-@keyframes reset-ring {
-  to {
-    rotate: 1turn;
-  }
+.header-reset[data-reset-active="true"]:hover {
+  border-color: var(--rust-bright);
+  background: var(--rust-bright);
 }
 
 .header-icon-button {
@@ -711,10 +676,6 @@ address {
 .card-front {
   z-index: 20;
   transform: rotate(0.75deg);
-}
-
-.card[data-dragging="true"] {
-  z-index: 30;
 }
 
 .card-art {
@@ -3182,8 +3143,6 @@ address {
     transition-delay: 0ms !important;
   }
 
-  .header-reset[data-reset-active="true"],
-  .header-reset[data-reset-active="true"]::before,
   .profile-section__scroll-cue::after {
     animation: none !important;
   }

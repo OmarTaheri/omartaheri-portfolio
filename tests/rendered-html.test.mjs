@@ -927,6 +927,44 @@ test("keeps live dragging on the compositor hot path", async () => {
   );
 });
 
+test("keeps card stacking order while dragging and uses a simple filled reset state", async () => {
+  const css = await readFile(
+    new URL("../app/globals.css", import.meta.url),
+    "utf8",
+  );
+  const draggingRule = css.match(
+    /\.movable-shell\[data-dragging="true"\]\s*\{([^}]*)\}/i,
+  );
+  const activeResetRule = css.match(
+    /\.header-reset\[data-reset-active="true"\]\s*\{([^}]*)\}/i,
+  );
+
+  assert.ok(draggingRule, "movable elements should expose a dragging state");
+  assert.doesNotMatch(
+    draggingRule[1],
+    /\bz-index\s*:/i,
+    "dragging should not change an element's stacking order",
+  );
+  assert.doesNotMatch(
+    css,
+    /\.card\[data-dragging="true"\]\s*\{[^}]*\bz-index\s*:/is,
+    "hero cards should retain their original stacking order",
+  );
+
+  assert.ok(activeResetRule, "the reset button should have an active state");
+  assert.match(activeResetRule[1], /\bbackground:\s*var\(--rust\)\s*;/i);
+  assert.doesNotMatch(
+    activeResetRule[1],
+    /\b(?:animation|box-shadow|text-shadow)\s*:/i,
+    "the active reset state should be a simple fill",
+  );
+  assert.doesNotMatch(
+    css,
+    /\.header-reset\[data-reset-active="true"\]::before/i,
+    "the active reset state should not add a decorative ring",
+  );
+});
+
 test("keeps navigation, project links, and contact actions valid", async () => {
   const { documentHtml } = await renderPage();
   const renderedIds = new Set(
