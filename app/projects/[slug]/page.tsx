@@ -56,7 +56,7 @@ export default async function ProjectPage({ params }: ProjectPageProps) {
 
       <section
         className={`project-detail-hero${
-          project.video && project.art ? " project-detail-hero--full-art" : ""
+          project.fullArt && project.art ? " project-detail-hero--full-art" : ""
         }`}
         aria-labelledby="project-title"
       >

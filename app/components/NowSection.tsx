@@ -19,7 +19,7 @@ export function NowSection() {
 
         <div className="now-card__copy">
           <p>
-            Right now, I am working on VEX U and helping a streaming platform
+            Right now, I am refining Rose Den and helping a streaming platform
             scale its infrastructure for the next wave of traffic.
           </p>
           <p>

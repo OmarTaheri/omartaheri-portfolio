@@ -39,20 +39,26 @@ const expectedProjects = [
     ],
   },
   {
-    slug: "vex-u",
-    title: "VEX U",
+    slug: "roseden",
+    title: "Rose Den",
     markdownHeadings: [
       "Overview",
-      "What I am working through",
+      "What I built",
       "Technologies",
+      "Design direction",
       "Current status",
     ],
     markdownTechnologies: [
-      "Robotics hardware",
-      "Mechanical and systems prototyping",
-      "Iterative testing",
+      "Next.js",
+      "React",
+      "TypeScript",
+      "vinext",
+      "Cloudflare Workers",
     ],
-    externalLinks: [],
+    externalLinks: [
+      "https://roseden.omartaheri.com/",
+      "https://github.com/OmarTaheri/roseden",
+    ],
   },
   {
     slug: "portfolio-omartaheri",
@@ -231,7 +237,7 @@ const expectedMovableIds = [
   "skill-card-7",
   "projects-heading",
   "project-card-heynotai",
-  "project-card-vex-u",
+  "project-card-roseden",
   "project-card-portfolio-omartaheri",
   "project-card-see-more",
   "now-card",
@@ -574,6 +580,9 @@ test("server-renders every Markdown-backed project detail page", async () => {
 });
 
 test("uses full-card header art and puts the one-shot showcase in Overview", async () => {
+  const { documentHtml: rosedenHtml } = await renderPage(
+    "/projects/roseden",
+  );
   const { documentHtml } = await renderPage(
     "/projects/portfolio-omartaheri",
   );
@@ -606,6 +615,16 @@ test("uses full-card header art and puts the one-shot showcase in Overview", asy
     documentHtml,
     /<section\b[^>]*class="[^"]*\bproject-detail-hero--full-art\b[^"]*"/i,
     "the portfolio project should use the full-card image treatment",
+  );
+  assert.match(
+    rosedenHtml,
+    /<section\b[^>]*class="[^"]*\bproject-detail-hero--full-art\b[^"]*"/i,
+    "Rose Den should use the same full-card image treatment as the portfolio project",
+  );
+  assert.match(
+    rosedenHtml,
+    /<img\b[^>]*src="\/art\/project-roseden\.jpg"/i,
+    "Rose Den should render its official project artwork",
   );
   const overviewHeadingIndex = markdown.indexOf(">Overview</h2>");
   const showcaseIndex = markdown.indexOf('src="/showcase.mp4"');
