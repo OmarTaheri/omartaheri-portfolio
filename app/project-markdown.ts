@@ -5,7 +5,7 @@ import heynotai from "./projects/_content/heynotai.md?raw";
 import mycv from "./projects/_content/mycv.md?raw";
 import portfolioOmartaheri from "./projects/_content/portfolio-omartaheri.md?raw";
 import roboticsClub from "./projects/_content/robotics-club.md?raw";
-import vexU from "./projects/_content/vex-u.md?raw";
+import roseden from "./projects/_content/roseden.md?raw";
 
 export const projectMarkdown: Readonly<Record<string, string>> = {
   "backblaze-site-backup": backblazeSiteBackup,
@@ -15,5 +15,5 @@ export const projectMarkdown: Readonly<Record<string, string>> = {
   mycv,
   "portfolio-omartaheri": portfolioOmartaheri,
   "robotics-club": roboticsClub,
-  "vex-u": vexU,
+  roseden,
 };

@@ -27,6 +27,7 @@ export type Project = {
   tags: readonly string[];
   technologies: readonly string[];
   art?: string;
+  fullArt?: boolean;
   video?: string;
   repository?: string;
   website?: string;
@@ -167,14 +168,23 @@ export const projects: readonly Project[] = [
     website: "https://heynotai.com/",
   },
   {
-    slug: "vex-u",
-    title: "VEX U",
+    slug: "roseden",
+    title: "Rose Den",
     description:
-      "My current build: a robotics project still taking shape behind the workshop doors.",
-    status: "In play now",
-    tags: ["Robotics", "In progress"],
-    technologies: ["Robotics hardware", "Iterative prototyping"],
-    art: "/art/project-vex-u.webp",
+      "A season-led floral storefront with an editorial, motion-rich experience for bouquets and custom events.",
+    status: "Live",
+    tags: ["E-commerce", "Brand experience"],
+    technologies: [
+      "Next.js",
+      "React",
+      "TypeScript",
+      "vinext",
+      "Cloudflare Workers",
+    ],
+    art: "/art/project-roseden.jpg",
+    fullArt: true,
+    repository: "https://github.com/OmarTaheri/roseden",
+    website: "https://roseden.omartaheri.com/",
   },
   {
     slug: "portfolio-omartaheri",
@@ -191,6 +201,7 @@ export const projects: readonly Project[] = [
       "Cloudflare Workers",
     ],
     art: "/website-image.jpg",
+    fullArt: true,
     video: "/showcase.mp4",
     website: "/",
   },
