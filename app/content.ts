@@ -181,7 +181,7 @@ export const projects: readonly Project[] = [
       "vinext",
       "Cloudflare Workers",
     ],
-    art: "/art/project-roseden.jpg",
+    art: "/art/project-roseden.png",
     fullArt: true,
     repository: "https://github.com/OmarTaheri/roseden",
     website: "https://roseden.omartaheri.com/",

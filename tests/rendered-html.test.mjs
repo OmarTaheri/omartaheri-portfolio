@@ -623,7 +623,7 @@ test("uses full-card header art and puts the one-shot showcase in Overview", asy
   );
   assert.match(
     rosedenHtml,
-    /<img\b[^>]*src="\/art\/project-roseden\.jpg"/i,
+    /<img\b[^>]*src="\/art\/project-roseden\.png"/i,
     "Rose Den should render its official project artwork",
   );
   const overviewHeadingIndex = markdown.indexOf(">Overview</h2>");
