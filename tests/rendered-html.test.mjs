@@ -15,145 +15,58 @@ const expectedProjects = [
   {
     slug: "heynotai",
     title: "HeyNotAI",
-    markdownHeadings: [
-      "Overview",
-      "Product surfaces",
-      "Architecture",
-      "Technologies",
-      "Current status",
-    ],
-    markdownTechnologies: [
-      "Next.js 16, React 19, TypeScript, and Tailwind CSS 4",
-      "WXT, React, and Chrome Manifest V3 for the extension",
-      "Hono on Node.js 22 for the API",
-      "PocketBase for authentication, storage, realtime updates, and schema",
-      "Zod for shared validation schemas",
-      "Hugging Face Inference and Modulate Velma detection providers",
-      "FFmpeg and yt-dlp for video and YouTube ingestion",
-      "Stripe for subscriptions and billing",
-      "Docker Compose and Coolify for deployment",
-    ],
-    externalLinks: [
-      "https://heynotai.com/",
-      "https://github.com/OmarTaheri/heynotai",
-    ],
-  },
-  {
-    slug: "roseden",
-    title: "Rose Den",
-    markdownHeadings: [
-      "Overview",
-      "What I built",
-      "Technologies",
-      "Design direction",
-      "Current status",
-    ],
-    markdownTechnologies: [
-      "Next.js",
-      "React",
-      "TypeScript",
-      "vinext",
-      "Cloudflare Workers",
-    ],
-    externalLinks: [
-      "https://roseden.omartaheri.com/",
-      "https://github.com/OmarTaheri/roseden",
-    ],
+    markdownHeadings: ["Overview", "Product surfaces", "Architecture", "Technologies", "Current status"],
+    markdownTechnologies: ["Next.js 16", "WXT", "Hono", "PocketBase", "Zod", "Stripe"],
+    externalLinks: ["https://heynotai.com/", "https://github.com/OmarTaheri/heynotai"],
   },
   {
     slug: "portfolio-omartaheri",
     title: "Omar's Digital Deck",
-    markdownHeadings: [
-      "Overview",
-      "What I built",
-      "Technologies",
-      "Design direction",
-      "Current status",
-    ],
-    markdownTechnologies: [
-      "Next.js",
-      "React",
-      "TypeScript",
-      "vinext",
-      "Cloudflare Workers",
-    ],
-    externalLinks: [],
+    markdownHeadings: ["Overview", "What I built", "Technologies", "Design direction", "Current status"],
+    markdownTechnologies: ["Next.js", "React", "TypeScript", "vinext", "Cloudflare Workers"],
+    externalLinks: ["https://github.com/OmarTaheri/omartaheri-portfolio"],
+  },
+  {
+    slug: "tiermaker-js",
+    title: "TierMaker.js",
+    markdownHeadings: ["Why I built it", "What it does", "The documentation", "Built with", "Current status"],
+    markdownTechnologies: ["TypeScript", "Node.js", "Bun", "Vitest", "Next.js", "npm"],
+    externalLinks: ["https://tiermakerjs.omartaheri.com/", "https://github.com/OmarTaheri/tiermaker.js", "https://www.npmjs.com/package/tiermaker.js", "https://tiermakerjs.omartaheri.com/docs"],
+  },
+  {
+    slug: "netlogger",
+    title: "NetLogger",
+    markdownHeadings: ["The small idea behind a bigger project", "What I built", "Consent is a feature", "Built with", "Current status"],
+    markdownTechnologies: ["React", "TypeScript", "Vite", "Express", "PostgreSQL", "Drizzle ORM", "WebSockets"],
+    externalLinks: ["https://netlogger.omartaheri.com/", "https://github.com/OmarTaheri/NetLogger", "https://netlogger.omartaheri.com"],
+  },
+  {
+    slug: "roseden",
+    title: "Rose Den",
+    markdownHeadings: ["Overview", "What I built", "Technologies", "Design direction", "Current status"],
+    markdownTechnologies: ["Next.js", "React", "TypeScript", "vinext", "Cloudflare Workers"],
+    externalLinks: ["https://roseden.omartaheri.com/", "https://github.com/OmarTaheri/roseden", "https://roseden.omartaheri.com/", "https://github.com/OmarTaheri/roseden"],
   },
   {
     slug: "go-plan",
-    title: "Go Plan",
-    markdownHeadings: [
-      "Overview",
-      "Product focus",
-      "Technologies",
-      "Current status",
-    ],
-    markdownTechnologies: [
-      "AI-assisted planning",
-      "Web application development",
-      "Education-focused product design",
-    ],
-    externalLinks: [],
+    title: "goPlan",
+    markdownHeadings: ["Why I built it", "What it changes", "Keeping AI in its place", "Built with", "Current status"],
+    markdownTechnologies: ["Next.js 16", "React 19", "TypeScript", "MySQL 8", "DeepSeek API", "Zod"],
+    externalLinks: ["https://github.com/OmarTaheri/goPlan"],
   },
   {
-    slug: "backblaze-site-backup",
-    title: "backblaze-site-backup",
-    markdownHeadings: [
-      "Overview",
-      "What it solves",
-      "Technologies",
-      "Current status",
-    ],
-    markdownTechnologies: [
-      "Python",
-      "Backblaze API",
-      "Backup automation",
-    ],
-    externalLinks: [],
+    slug: "the-ultimate-tier-board",
+    title: "The Ultimate Tier Board",
+    markdownHeadings: ["Why I built it", "What it can do", "Built with", "The idea that stayed"],
+    markdownTechnologies: ["Next.js 16", "React 19", "TypeScript", "PostgreSQL", "Drizzle ORM", "Better Auth", "Liveblocks", "Stripe"],
+    externalLinks: ["https://github.com/OmarTaheri/the-ultimate-tier-board"],
   },
   {
-    slug: "floussi-merchant",
-    title: "Floussi Merchant",
-    markdownHeadings: [
-      "Overview",
-      "Product focus",
-      "Technologies",
-      "Current status",
-    ],
-    markdownTechnologies: [
-      "Kotlin",
-      "Android application development",
-      "Mobile product design",
-    ],
-    externalLinks: [],
-  },
-  {
-    slug: "mycv",
-    title: "mycv",
-    markdownHeadings: [
-      "Overview",
-      "What I explored",
-      "Technologies",
-      "Current status",
-    ],
-    markdownTechnologies: ["HTML", "CSS", "Personal web design"],
-    externalLinks: [],
-  },
-  {
-    slug: "robotics-club",
-    title: "Robotics Club",
-    markdownHeadings: [
-      "Overview",
-      "What I worked on",
-      "Technologies",
-      "Current status",
-    ],
-    markdownTechnologies: [
-      "Web application development",
-      "Self-hosting",
-      "Server operations",
-    ],
-    externalLinks: ["https://auirobotics.com/"],
+    slug: "aui-summer-school",
+    title: "AUI Summer School",
+    markdownHeadings: ["Overview", "What I built", "Built with", "Keeping it useful", "Current status"],
+    markdownTechnologies: ["HTML", "CSS", "JavaScript", "Responsive design"],
+    externalLinks: ["https://github.com/OmarTaheri/aui-summer-school"],
   },
 ];
 
@@ -237,8 +150,8 @@ const expectedMovableIds = [
   "skill-card-7",
   "projects-heading",
   "project-card-heynotai",
-  "project-card-roseden",
   "project-card-portfolio-omartaheri",
+  "project-card-tiermaker-js",
   "project-card-see-more",
   "now-card",
   "contact-card",
@@ -748,8 +661,16 @@ test("raises the hero cards before the lower centered introduction", async () =>
 
   assert.ok(heroRule, "the hero should define its full-height layout");
   assert.match(heroRule[1], /min-height:\s*max\(100svh,\s*62rem\)/i);
+  assert.match(heroRule[1], /--hero-stage-height:\s*max\(100svh,\s*40rem\)/i);
+  assert.match(
+    heroRule[1],
+    /--hero-safe-top:\s*max\(84px,\s*calc\(env\(safe-area-inset-top\)\s*\+\s*76px\)\)/i,
+  );
   assert.ok(cardRule, "the hero should position its cards");
-  assert.match(heroRule[1], /--hero-card-center-y:\s*44svh/i);
+  assert.match(
+    heroRule[1],
+    /--hero-card-center-y:\s*max\([\s\S]*?var\(--hero-stage-height\)[\s\S]*?var\(--hero-safe-top\)[\s\S]*?var\(--card-half-height\)/i,
+  );
   assert.match(
     cardRule[1],
     /top:\s*calc\(var\(--hero-card-center-y\)\s*-\s*var\(--card-half-height\)\)/i,
@@ -822,7 +743,7 @@ test("keeps the me-again sticker visible and eagerly loaded", async () => {
   assert.match(stickerFieldRule[1], /\bz-index:\s*10\s*;/i);
 });
 
-test("matches the desktop reference anchors and keeps stickers below the cards", async () => {
+test("uses one fluid sticker stage with card-anchored portrait and cat", async () => {
   const css = await readFile(
     new URL("../app/globals.css", import.meta.url),
     "utf8",
@@ -832,27 +753,51 @@ test("matches the desktop reference anchors and keeps stickers below the cards",
     "utf8",
   );
   const cardFrontRule = css.match(/\.card-front\s*\{([\s\S]*?)\}/);
-  const desktopRule = css.match(
-    /@media\s*\(min-width:\s*821px\)\s*\{([\s\S]*?)\/\* Story:/i,
-  );
+  const stickerFieldRule = css.match(/\.sticker-field\s*\{([\s\S]*?)\}/);
+  const portraitRule = css.match(/\.sticker-one\s*\{([\s\S]*?)\}/);
+  const catRule = css.match(/\.sticker-nine\s*\{([\s\S]*?)\}/);
 
   assert.ok(cardFrontRule, "the front hero card should have a stacking layer");
   assert.match(cardFrontRule[1], /\bz-index:\s*20\s*;/i);
-  assert.ok(desktopRule, "the hero should define a desktop composition");
+  assert.match(css, /--card-width:\s*clamp\(288px,\s*40vw,\s*470px\)/i);
+  assert.ok(stickerFieldRule, "the hero should define one bounded sticker stage");
+  assert.match(stickerFieldRule[1], /height:\s*var\(--hero-stage-height\)/i);
+  assert.match(stickerFieldRule[1], /width:\s*min\(100%,\s*100rem\)/i);
+  assert.ok(portraitRule, "the portrait should have a stable card anchor");
   assert.match(
-    desktopRule[1],
-    /--card-width:\s*clamp\(460px,\s*44vw,\s*540px\)/i,
+    portraitRule[1],
+    /--portrait-size:\s*clamp\(112px,\s*22vmin,\s*246px\)/i,
   );
   assert.match(
-    desktopRule[1],
-    /--card-height:\s*calc\(var\(--card-width\)\s*\*\s*0\.696\)/i,
+    portraitRule[1],
+    /top:\s*max\([\s\S]*?var\(--hero-safe-top\)[\s\S]*?var\(--hero-card-top\)[\s\S]*?var\(--portrait-size\)/i,
   );
   assert.match(
-    desktopRule[1],
-    /\.profile-section\s*\{[\s\S]*?--portrait-size:\s*clamp\(140px,\s*15vw,\s*224px\)/i,
+    portraitRule[1],
+    /left:\s*calc\([\s\S]*?var\(--card-width\)\s*\*\s*0\.24[\s\S]*?var\(--portrait-size\)\s*\*\s*0\.5/i,
   );
-  assert.match(desktopRule[1], /\.sticker-nine\s*\{[\s\S]*?left:\s*calc\(50%\s*\+\s*var\(--card-half-width\)\s*-\s*27px\)/i);
-  assert.match(desktopRule[1], /\.sticker-eleven\s*\{[\s\S]*?width:\s*clamp\(76px,\s*7\.5vw,\s*128px\)/i);
+  assert.ok(catRule, "the cat should have a stable card-edge anchor");
+  assert.match(
+    catRule[1],
+    /--cat-size:\s*clamp\(64px,\s*13\.5vmin,\s*132px\)/i,
+  );
+  assert.match(
+    catRule[1],
+    /top:\s*calc\(var\(--hero-card-center-y\)\s*-\s*\(var\(--cat-size\)\s*\*\s*0\.58\)\)/i,
+  );
+  assert.match(
+    catRule[1],
+    /left:\s*min\([\s\S]*?var\(--card-half-width\)[\s\S]*?var\(--cat-size\)/i,
+  );
+  assert.match(
+    css,
+    /@media\s*\(max-width:\s*600px\)\s*\{[\s\S]*?--hero-tail:\s*calc\(\s*var\(--hero-stage-height\)\s*-\s*var\(--hero-card-bottom\)\s*\)/i,
+  );
+  assert.match(
+    css,
+    /\.sticker-eight\s*\{\s*top:\s*calc\(\s*var\(--hero-card-bottom\)\s*\+\s*var\(--hero-tail\)/i,
+  );
+  assert.doesNotMatch(css, /max-aspect-ratio:\s*5\s*\/\s*4/i);
 
   assert.match(
     stickerSource,

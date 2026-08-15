@@ -1,0 +1,20 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 832 936" role="img" aria-labelledby="title desc">
+  <title id="title">NetLogger project artwork</title>
+  <desc id="desc">A privacy-minded analytics dashboard with a location signal and consent indicator.</desc>
+  <defs><linearGradient id="bg" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#071a16"/><stop offset="1" stop-color="#0d3b34"/></linearGradient><filter id="shadow"><feDropShadow dx="0" dy="18" stdDeviation="20" flood-opacity=".35"/></filter></defs>
+  <rect width="832" height="936" rx="56" fill="url(#bg)"/>
+  <path d="M0 665C170 565 265 755 440 651s245-79 392-9v294H0Z" fill="#10b981" opacity=".12"/>
+  <g transform="translate(86 152)" filter="url(#shadow)">
+    <rect width="660" height="548" rx="34" fill="#f4fbf8"/>
+    <rect width="660" height="74" rx="34" fill="#dff7ed"/><circle cx="42" cy="37" r="9" fill="#10b981"/><circle cx="72" cy="37" r="9" fill="#6ee7b7"/><circle cx="102" cy="37" r="9" fill="#a7f3d0"/>
+    <rect x="34" y="110" width="218" height="400" rx="22" fill="#0d3b34"/>
+    <text x="68" y="160" fill="#fff" font-family="Arial, sans-serif" font-size="25" font-weight="700">Live activity</text>
+    <g fill="#34d399"><circle cx="70" cy="212" r="8"/><circle cx="70" cy="276" r="8"/><circle cx="70" cy="340" r="8"/></g>
+    <g fill="#d1fae5"><rect x="94" y="202" width="116" height="12" rx="6"/><rect x="94" y="266" width="88" height="12" rx="6"/><rect x="94" y="330" width="128" height="12" rx="6"/></g>
+    <g transform="translate(286 116)"><rect width="340" height="182" rx="22" fill="#e7f5ef"/><path d="M24 139 82 112l48 11 56-63 56 32 74-58" fill="none" stroke="#10b981" stroke-width="12" stroke-linecap="round" stroke-linejoin="round"/><circle cx="316" cy="34" r="11" fill="#10b981"/></g>
+    <g transform="translate(286 326)"><rect width="160" height="184" rx="22" fill="#ecfdf5"/><path d="M80 42c-32 0-57 25-57 57 0 45 57 74 57 74s57-29 57-74c0-32-25-57-57-57Z" fill="#10b981"/><circle cx="80" cy="99" r="20" fill="#ecfdf5"/></g>
+    <g transform="translate(466 326)"><rect width="160" height="184" rx="22" fill="#dff7ed"/><path d="m80 40 48 18v41c0 34-20 60-48 77-28-17-48-43-48-77V58Z" fill="#0d3b34"/><path d="m58 103 14 14 31-35" fill="none" stroke="#6ee7b7" stroke-width="10" stroke-linecap="round" stroke-linejoin="round"/></g>
+  </g>
+  <text x="416" y="800" fill="#fff" text-anchor="middle" font-family="Arial, sans-serif" font-size="72" font-weight="800">NetLogger</text>
+  <text x="416" y="854" fill="#6ee7b7" text-anchor="middle" font-family="Arial, sans-serif" font-size="25" font-weight="700" letter-spacing="3">CONSENT FIRST</text>
+</svg>

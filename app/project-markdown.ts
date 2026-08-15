@@ -1,19 +1,19 @@
-import backblazeSiteBackup from "./projects/_content/backblaze-site-backup.md?raw";
-import floussiMerchant from "./projects/_content/floussi-merchant.md?raw";
+import auiSummerSchool from "./projects/_content/aui-summer-school.md?raw";
 import goPlan from "./projects/_content/go-plan.md?raw";
 import heynotai from "./projects/_content/heynotai.md?raw";
-import mycv from "./projects/_content/mycv.md?raw";
+import netlogger from "./projects/_content/netlogger.md?raw";
 import portfolioOmartaheri from "./projects/_content/portfolio-omartaheri.md?raw";
-import roboticsClub from "./projects/_content/robotics-club.md?raw";
 import roseden from "./projects/_content/roseden.md?raw";
+import tiermakerJs from "./projects/_content/tiermaker-js.md?raw";
+import ultimateTierBoard from "./projects/_content/the-ultimate-tier-board.md?raw";
 
 export const projectMarkdown: Readonly<Record<string, string>> = {
-  "backblaze-site-backup": backblazeSiteBackup,
-  "floussi-merchant": floussiMerchant,
+  "aui-summer-school": auiSummerSchool,
   "go-plan": goPlan,
   heynotai,
-  mycv,
+  netlogger,
   "portfolio-omartaheri": portfolioOmartaheri,
-  "robotics-club": roboticsClub,
   roseden,
+  "tiermaker-js": tiermakerJs,
+  "the-ultimate-tier-board": ultimateTierBoard,
 };

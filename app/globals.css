@@ -38,7 +38,7 @@
   --sticker-edge: #eadcc7;
   --focus: #e0644b;
   --shadow: rgba(0, 0, 0, 0.42);
-  --card-width: clamp(300px, 45vw, 480px);
+  --card-width: clamp(288px, 40vw, 470px);
   --card-height: calc(var(--card-width) * 0.696);
   color-scheme: dark;
 }
@@ -611,9 +611,16 @@ address {
 /* Profile: the original landscape card stack is the hero. */
 
 .profile-section {
-  --hero-card-center-y: 44svh;
+  --hero-stage-height: max(100svh, 40rem);
+  --hero-safe-top: max(84px, calc(env(safe-area-inset-top) + 76px));
   --card-half-width: calc(var(--card-width) * 0.5);
   --card-half-height: calc(var(--card-height) * 0.5);
+  --hero-card-center-y: max(
+    calc(var(--hero-stage-height) * 0.44),
+    calc(var(--hero-safe-top) + var(--card-half-height) + 2rem)
+  );
+  --hero-card-top: calc(var(--hero-card-center-y) - var(--card-half-height));
+  --hero-card-bottom: calc(var(--hero-card-center-y) + var(--card-half-height));
   position: relative;
   min-height: max(100svh, 62rem);
   padding: 0 2rem;
@@ -866,16 +873,20 @@ address {
   position: absolute;
   z-index: 10;
   top: 0;
-  right: 0;
-  left: 0;
-  height: 100svh;
+  left: 50%;
+  width: min(100%, 100rem);
+  height: var(--hero-stage-height);
   overflow: hidden;
   pointer-events: none;
+  transform: translateX(-50%);
 }
 
 .draggable-sticker {
   position: absolute;
-  width: clamp(58px, 6.4vw, 98px);
+  right: auto;
+  bottom: auto;
+  left: auto;
+  width: clamp(42px, 10vmin, 98px);
   margin: 0;
   padding: 0;
   border: 0;
@@ -906,264 +917,321 @@ address {
 }
 
 .sticker-one {
-  top: 8%;
-  left: 3%;
-  width: clamp(70px, 7.5vw, 112px);
+  --portrait-size: clamp(112px, 22vmin, 246px);
+  --portrait-card-overlap: clamp(24px, 3.2vmin, 34px);
+  top: max(
+    var(--hero-safe-top),
+    calc(
+      var(--hero-card-top) + var(--portrait-card-overlap) -
+        var(--portrait-size)
+    )
+  );
+  left: calc(
+    50% - (var(--card-width) * 0.24) - (var(--portrait-size) * 0.5)
+  );
+  width: var(--portrait-size);
 }
 
 .sticker-two {
-  top: 27%;
-  left: 1%;
+  top: max(var(--hero-safe-top), 12%);
+  left: 3.2%;
+  width: clamp(48px, 11vmin, 138px);
 }
 
 .sticker-three {
-  top: 47%;
-  left: 2%;
+  top: 38%;
+  right: 3.5%;
+  width: clamp(42px, 10.2vmin, 122px);
 }
 
+/* The vinyl player sits in the open gap just right of the cat. */
+
 .sticker-four {
-  top: 66%;
-  left: 4%;
+  --vinyl-size: clamp(42px, 9.4vmin, 110px);
+  --vinyl-cat-size: clamp(64px, 13.5vmin, 132px);
+  top: calc(var(--hero-card-center-y) + (var(--vinyl-size) * 0.12));
+  left: min(
+    calc(
+      50% + var(--card-half-width) + (var(--vinyl-cat-size) * 0.76) + 0.9rem
+    ),
+    calc(100% - var(--vinyl-size) - 0.75rem)
+  );
+  width: var(--vinyl-size);
 }
 
 .sticker-five {
-  bottom: 3%;
-  left: 13%;
+  top: max(var(--hero-safe-top), 9.9%);
+  left: 18%;
+  width: clamp(44px, 10.5vmin, 120px);
 }
 
 .sticker-six {
-  bottom: 2%;
-  left: 27%;
+  top: 21.4%;
+  left: 82%;
+  width: clamp(56px, 12.5vmin, 155px);
 }
 
 .sticker-seven {
-  bottom: 2%;
-  left: 40%;
+  top: 60%;
+  left: 14%;
+  width: clamp(46px, 10.2vmin, 120px);
 }
 
 .sticker-eight {
-  right: 40%;
-  bottom: 2%;
+  top: 42%;
+  left: 23%;
+  width: clamp(42px, 9.9vmin, 118px);
 }
 
 .sticker-nine {
-  right: 27%;
-  bottom: 2%;
+  --cat-size: clamp(64px, 13.5vmin, 132px);
+  top: calc(var(--hero-card-center-y) - (var(--cat-size) * 0.58));
+  left: min(
+    calc(50% + var(--card-half-width) - (var(--cat-size) * 0.24)),
+    calc(100% - var(--cat-size) - 0.5rem)
+  );
+  width: var(--cat-size);
 }
 
 .sticker-ten {
-  right: 13%;
-  bottom: 3%;
+  top: 82%;
+  right: 3.5%;
+  width: clamp(46px, 10.7vmin, 128px);
 }
 
 .sticker-eleven {
-  right: 4%;
-  bottom: 15%;
+  top: 18.8%;
+  left: 69%;
+  width: clamp(46px, 10vmin, 128px);
 }
 
 .sticker-twelve {
-  top: 47%;
-  right: 2%;
+  --tor-size: clamp(46px, 10.7vmin, 130px);
+  top: 75%;
+  left: min(
+    calc(50% + 18rem),
+    calc(100% - var(--tor-size) - 1rem)
+  );
+  width: var(--tor-size);
 }
 
 .sticker-thirteen {
-  top: 27%;
-  right: 1%;
+  top: 68%;
+  left: 84%;
+  width: clamp(40px, 8.3vmin, 96px);
 }
 
 .sticker-fourteen {
-  top: 8%;
-  right: 3%;
+  top: max(var(--hero-safe-top), 7.9%);
+  left: 79.7%;
+  width: clamp(42px, 8.9vmin, 110px);
 }
 
 .sticker-fifteen {
-  top: 3%;
-  left: 21%;
+  top: 23%;
+  left: 14%;
+  width: clamp(44px, 10vmin, 120px);
 }
 
 .sticker-sixteen {
-  top: 13%;
-  left: 15%;
-  width: clamp(112px, 12vw, 176px);
+  top: 74%;
+  left: 4%;
+  width: clamp(84px, 19.5vmin, 190px);
 }
 
 .sticker-seventeen {
-  top: 3%;
-  right: 21%;
+  top: 49%;
+  left: 4%;
+  width: clamp(44px, 10vmin, 120px);
 }
 
 .draggable-sticker.sticker-eighteen {
-  top: calc(62% - 20px);
+  top: 62%;
   right: -4px;
-  left: auto;
-  width: clamp(105px, 12vw, 150px);
+  width: clamp(84px, 16vmin, 150px);
 }
 
 .draggable-sticker.sticker-nineteen {
-  top: calc(10% - 30px);
-  left: calc(16% + 60px);
-  width: clamp(58px, 10vw, 88px);
+  top: 13.5%;
+  left: 53.2%;
+  width: clamp(50px, 10.7vmin, 112px);
 }
 
-@media (min-width: 821px) {
-  .profile-section {
-    --card-width: clamp(460px, 44vw, 540px);
-    --card-height: calc(var(--card-width) * 0.696);
-    --portrait-size: clamp(140px, 15vw, 224px);
-    --computer-size: clamp(72px, 8vw, 112px);
-  }
-
-  .sticker-one {
-    top: 19.1%;
-    right: auto;
-    bottom: auto;
-    left: 30.5%;
-    width: var(--portrait-size);
-  }
-
-  .sticker-two {
-    top: 12%;
-    right: auto;
-    bottom: auto;
-    left: 3.2%;
-    width: clamp(84px, 8vw, 138px);
-  }
-
-  .sticker-three {
-    top: 38%;
-    right: 3.5%;
-    bottom: auto;
-    left: auto;
-    width: clamp(78px, 7vw, 122px);
-  }
-
-  .sticker-four {
-    top: 82%;
-    right: auto;
-    bottom: auto;
-    left: 4%;
-    width: clamp(72px, 6.5vw, 110px);
-  }
-
-  .sticker-five {
-    top: 9.9%;
-    right: auto;
-    bottom: auto;
-    left: 22.9%;
-    width: clamp(80px, 8vw, 120px);
-  }
-
-  .sticker-six {
-    top: 21.4%;
-    right: auto;
-    bottom: auto;
-    left: 82%;
-    width: clamp(96px, 9vw, 155px);
-  }
-
-  .sticker-seven {
-    top: 60%;
-    right: auto;
-    bottom: auto;
-    left: 14%;
-    width: clamp(78px, 7.5vw, 120px);
-  }
-
-  .sticker-eight {
-    top: 42%;
-    right: auto;
-    bottom: auto;
-    left: 23%;
-    width: clamp(76px, 7vw, 118px);
-  }
-
-  .sticker-nine {
-    --cat-size: clamp(72px, 6.4vw, 104px);
-    top: calc(var(--hero-card-center-y) - (var(--cat-size) * 0.58));
-    right: auto;
-    bottom: auto;
-    left: calc(50% + var(--card-half-width) - 27px);
-    width: var(--cat-size);
-  }
-
-  .sticker-ten {
-    top: 82%;
-    right: 3.5%;
-    bottom: auto;
-    left: auto;
-    width: clamp(82px, 7.5vw, 128px);
-  }
-
-  .sticker-eleven {
-    top: 18.8%;
-    right: auto;
-    bottom: auto;
-    left: 69%;
-    width: clamp(76px, 7.5vw, 128px);
-  }
+@media (max-width: 1024px) {
+  /* Narrow stages pull the right-edge stickers back off each other. */
 
   .sticker-twelve {
-    top: 75%;
-    right: auto;
-    bottom: auto;
-    left: 73%;
-    width: clamp(82px, 7.5vw, 130px);
+    left: 55%;
   }
 
   .sticker-thirteen {
-    top: 68%;
-    right: auto;
-    bottom: auto;
-    left: 84%;
-    width: clamp(64px, 5.8vw, 96px);
+    left: 74%;
+  }
+}
+
+@media (max-width: 820px) {
+  /* Phones split the hero: a card-only screen, then the intro copy below it. */
+
+  .profile-section {
+    --card-width: clamp(280px, calc(16vw + 238px), 369px);
+    --card-height: calc(var(--card-width) * 0.696);
+    --hero-stage-height: max(100svh, 34rem);
+    --hero-intro-height: max(30rem, 52svh);
+    --hero-card-center-y: max(
+      calc(var(--hero-stage-height) * 0.44),
+      calc(var(--hero-safe-top) + var(--card-half-height) + 10rem)
+    );
+    min-height: calc(var(--hero-stage-height) + var(--hero-intro-height));
   }
 
-  .sticker-fourteen {
-    top: 7.9%;
-    right: auto;
+  .profile-intro {
+    top: var(--hero-stage-height);
     bottom: auto;
-    left: 79.7%;
-    width: clamp(68px, 6vw, 110px);
+    display: flex;
+    height: var(--hero-intro-height);
+    flex-direction: column;
+    justify-content: flex-start;
+    padding-top: 2.5rem;
+  }
+}
+
+@media (max-width: 600px) {
+  /* A phone-sized deck leaves the cat room to peek past the card edge. */
+
+  .profile-section {
+    --card-width: clamp(232px, calc(28vw + 148px), 292px);
+    /* Rows below the card share whatever stage is left, so they never invert. */
+    --hero-tail: calc(var(--hero-stage-height) - var(--hero-card-bottom));
   }
 
-  .sticker-fifteen {
-    top: 23%;
-    right: auto;
-    bottom: auto;
-    left: 14%;
-    width: clamp(76px, 7.5vw, 120px);
+  /* Phone stickers grow and spread over the whole card screen. */
+
+  .draggable-sticker {
+    width: clamp(66px, 18vw, 94px);
   }
 
-  .sticker-sixteen {
-    top: 74%;
-    right: auto;
-    bottom: auto;
-    left: 16%;
-    width: clamp(150px, 12vw, 220px);
+  /* The portrait and the cat keep their own card-anchored sizing. */
+
+  .sticker-one {
+    width: var(--portrait-size);
   }
 
-  .sticker-seventeen {
-    top: 49%;
-    right: auto;
-    bottom: auto;
-    left: 4%;
-    width: clamp(76px, 7.2vw, 120px);
+  .sticker-nine {
+    --cat-size: clamp(78px, 21vw, 132px);
+    width: var(--cat-size);
   }
 
-  .draggable-sticker.sticker-eighteen {
-    top: calc(62% - 20px);
-    right: -4px;
-    bottom: auto;
-    left: auto;
-    width: clamp(105px, 12vw, 150px);
+  .sticker-four {
+    top: var(--hero-safe-top);
+    left: 12%;
+  }
+
+  /* The dumbbell drops out of the crowded top-left into the bottom corner. */
+
+  .sticker-five {
+    top: min(
+      calc(var(--hero-card-bottom) + var(--hero-tail) * 0.72),
+      calc(var(--hero-stage-height) - 5rem)
+    );
+    left: 2%;
   }
 
   .draggable-sticker.sticker-nineteen {
-    top: 13.5%;
+    top: calc(var(--hero-safe-top) + 0.15rem);
+    left: 45%;
+    width: clamp(80px, 21vw, 104px);
+  }
+
+  .sticker-fourteen {
+    top: var(--hero-safe-top);
+    right: 3%;
+    left: auto;
+  }
+
+  .sticker-two {
+    top: calc(var(--hero-safe-top) + 5.2rem);
+    left: 1%;
+  }
+
+  .sticker-six {
+    top: calc(var(--hero-safe-top) + 5.6rem);
     right: auto;
-    bottom: auto;
-    left: 53.2%;
-    width: var(--computer-size);
+    left: 54%;
+    width: clamp(76px, 21vw, 108px);
+  }
+
+  .sticker-three {
+    top: calc(var(--hero-safe-top) + 8rem);
+    right: 3%;
+    left: auto;
+  }
+
+  .sticker-eleven {
+    top: calc(var(--hero-card-top) + 0.25rem);
+    right: auto;
+    left: -8px;
+  }
+
+  .sticker-seventeen {
+    top: calc(var(--hero-card-center-y) + 1.2rem);
+    left: -8px;
+  }
+
+  /* Two staggered rows fill the stage below the card, corner to corner. */
+
+  .sticker-seven {
+    top: calc(var(--hero-card-bottom) + var(--hero-tail) * 0.08);
+    left: 2%;
+  }
+
+  .sticker-twelve {
+    top: calc(var(--hero-card-bottom) + var(--hero-tail) * 0.09);
+    right: auto;
+    left: 52%;
+  }
+
+  .sticker-ten {
+    top: calc(var(--hero-card-bottom) + var(--hero-tail) * 0.16);
+    right: auto;
+    left: 27%;
+  }
+
+  .sticker-thirteen {
+    top: calc(var(--hero-card-bottom) + var(--hero-tail) * 0.18);
+    right: 3%;
+    left: auto;
+  }
+
+  .sticker-eight {
+    top: calc(var(--hero-card-bottom) + var(--hero-tail) * 0.42);
+    right: auto;
+    left: 52%;
+  }
+
+  .draggable-sticker.sticker-eighteen {
+    top: calc(var(--hero-card-bottom) + var(--hero-tail) * 0.47);
+    right: auto;
+    left: 0;
+    width: clamp(92px, 25vw, 132px);
+  }
+
+  .sticker-sixteen {
+    top: min(
+      calc(var(--hero-card-bottom) + var(--hero-tail) * 0.62),
+      calc(var(--hero-stage-height) - 7rem)
+    );
+    right: 0;
+    left: auto;
+    width: clamp(92px, 25vw, 132px);
+  }
+
+  .sticker-fifteen {
+    top: min(
+      calc(var(--hero-card-bottom) + var(--hero-tail) * 0.68),
+      calc(var(--hero-stage-height) - 5rem)
+    );
+    right: auto;
+    left: 30%;
   }
 }
 
@@ -2903,7 +2971,6 @@ address {
   }
 
   .profile-section {
-    min-height: max(100svh, 60rem);
     padding: 0 0.75rem;
   }
 
@@ -2933,123 +3000,6 @@ address {
 
   .profile-intro__actions .cta-link {
     width: 100%;
-  }
-
-  .draggable-sticker,
-  .draggable-sticker:nth-child(n) {
-    width: clamp(38px, 12vw, 50px);
-  }
-
-  .sticker-one {
-    top: 10%;
-    bottom: auto;
-    left: 1%;
-  }
-
-  .sticker-two {
-    top: 27%;
-    bottom: auto;
-    left: 0;
-  }
-
-  .sticker-three {
-    top: 44%;
-    right: auto;
-    left: 0;
-  }
-
-  .sticker-four {
-    top: 61%;
-    right: auto;
-    bottom: auto;
-    left: 1%;
-  }
-
-  .sticker-five {
-    top: auto;
-    bottom: 7%;
-    right: auto;
-    left: 2%;
-  }
-
-  .sticker-six {
-    top: auto;
-    right: auto;
-    bottom: 2%;
-    left: 17%;
-  }
-
-  .sticker-seven {
-    bottom: 1%;
-    left: 35%;
-  }
-
-  .sticker-eight {
-    right: 35%;
-    bottom: 1%;
-  }
-
-  .sticker-nine {
-    right: 17%;
-    bottom: 2%;
-  }
-
-  .sticker-ten {
-    right: 2%;
-    bottom: 7%;
-  }
-
-  .sticker-eleven {
-    top: 61%;
-    right: 1%;
-    bottom: auto;
-  }
-
-  .sticker-twelve {
-    top: 44%;
-    right: 0;
-  }
-
-  .sticker-thirteen {
-    top: 27%;
-    right: 0;
-  }
-
-  .sticker-fourteen {
-    top: calc(10% + 60px);
-    right: calc(1% + 40px);
-  }
-
-  .sticker-fifteen {
-    top: 2%;
-    left: 18%;
-  }
-
-  .sticker-sixteen {
-    top: 18%;
-    left: 2%;
-    width: clamp(74px, 22vw, 92px);
-  }
-
-  .sticker-seventeen {
-    top: 2%;
-    right: 18%;
-  }
-
-  .draggable-sticker.sticker-eighteen {
-    top: calc(61% - 20px);
-    right: -4px;
-    bottom: auto;
-    left: auto;
-    width: clamp(90px, 28vw, 120px);
-  }
-
-  .draggable-sticker.sticker-nineteen {
-    top: calc(10% - 30px);
-    right: auto;
-    bottom: auto;
-    left: calc(16% + 60px);
-    width: clamp(58px, 18vw, 72px);
   }
 
   .section-heading h2,
@@ -3341,333 +3291,5 @@ html.reveal-ready
   .contact-finale__actions .copy-email-control,
   .contact-finale__actions .copy-email-button {
     width: 100%;
-  }
-}
-
-@media (max-width: 820px) {
-  .sticker-one {
-    top: 25.6%;
-    right: auto;
-    bottom: auto;
-    left: 30.5%;
-    width: clamp(82px, 25vw, 108px);
-  }
-
-  .sticker-two {
-    top: 26.5%;
-    right: auto;
-    bottom: auto;
-    left: 6.7%;
-    width: clamp(72px, 22vw, 92px);
-  }
-
-  .sticker-three {
-    top: 47.3%;
-    right: auto;
-    bottom: auto;
-    left: 5%;
-    width: clamp(48px, 15vw, 64px);
-  }
-
-  .sticker-four {
-    top: 60.8%;
-    right: auto;
-    bottom: auto;
-    left: 20.7%;
-    width: clamp(58px, 18vw, 74px);
-  }
-
-  .sticker-five {
-    top: 53%;
-    right: auto;
-    bottom: auto;
-    left: 5%;
-    width: clamp(56px, 17vw, 72px);
-  }
-
-  .sticker-six {
-    top: 7.3%;
-    right: auto;
-    bottom: auto;
-    left: 70%;
-    width: clamp(76px, 23vw, 98px);
-  }
-
-  .sticker-seven {
-    top: 11%;
-    right: auto;
-    bottom: auto;
-    left: 44%;
-    width: clamp(68px, 20vw, 86px);
-  }
-
-  .sticker-eight {
-    top: 48.1%;
-    right: auto;
-    bottom: auto;
-    left: 86.9%;
-    width: clamp(66px, 20vw, 84px);
-  }
-
-  .sticker-nine {
-    top: 39.9%;
-    right: auto;
-    bottom: auto;
-    left: 70%;
-    width: clamp(52px, 16vw, 68px);
-  }
-
-  .sticker-ten {
-    top: 18.1%;
-    right: auto;
-    bottom: auto;
-    left: 45.3%;
-    width: clamp(68px, 20vw, 86px);
-    transform: none;
-  }
-
-  .sticker-eleven {
-    top: 61.9%;
-    right: auto;
-    bottom: auto;
-    left: 58.9%;
-    width: clamp(58px, 18vw, 76px);
-  }
-
-  .sticker-twelve {
-    top: 12%;
-    right: auto;
-    bottom: auto;
-    left: 5%;
-    width: clamp(76px, 23vw, 98px);
-  }
-
-  .sticker-thirteen {
-    top: 27%;
-    right: 1%;
-    bottom: auto;
-    left: auto;
-    width: clamp(44px, 13vw, 56px);
-  }
-
-  .sticker-fourteen {
-    top: 17.1%;
-    right: auto;
-    bottom: auto;
-    left: 83.1%;
-    width: clamp(64px, 19vw, 82px);
-  }
-
-  .sticker-fifteen {
-    top: 36.2%;
-    right: auto;
-    bottom: auto;
-    left: 6%;
-    width: clamp(58px, 18vw, 76px);
-  }
-
-  .sticker-sixteen {
-    top: 21.4%;
-    right: auto;
-    bottom: auto;
-    left: 64%;
-    width: clamp(78px, 24vw, 102px);
-  }
-
-  .sticker-seventeen {
-    top: 34.8%;
-    right: auto;
-    bottom: auto;
-    left: 85.4%;
-    width: clamp(60px, 18vw, 78px);
-  }
-
-  .draggable-sticker.sticker-eighteen {
-    top: 60.2%;
-    right: auto;
-    bottom: auto;
-    left: 78.9%;
-    width: clamp(120px, 38vw, 162px);
-  }
-
-  .draggable-sticker.sticker-nineteen {
-    top: 12.3%;
-    right: auto;
-    bottom: auto;
-    left: 25.3%;
-    width: clamp(82px, 25vw, 108px);
-  }
-}
-
-@media (max-width: 400px) {
-  .sticker-one {
-    top: calc(
-      var(--hero-card-center-y) - var(--card-half-height) - 118px
-    );
-    left: 8%;
-    width: clamp(160px, 52vw, 195px);
-  }
-
-  .sticker-nine {
-    right: 7%;
-    left: auto;
-  }
-
-  .draggable-sticker.sticker-nineteen {
-    left: 27%;
-    width: clamp(64px, 19vw, 76px);
-  }
-}
-
-@media (min-width: 1200px) {
-  .sticker-one {
-    top: calc(
-      var(--hero-card-center-y) - var(--card-half-height) -
-        var(--portrait-size) + 30px
-    );
-    left: calc(
-      50% - (var(--card-width) * 0.22) - (var(--portrait-size) * 0.5)
-    );
-  }
-}
-
-@media (min-width: 560px) and (max-width: 640px) {
-  .draggable-sticker.sticker-one {
-    top: 25.8%;
-    left: 26.7%;
-    width: clamp(112px, 22vw, 132px);
-  }
-
-  .draggable-sticker.sticker-nine {
-    top: 40.1%;
-    right: auto;
-    left: 74.4%;
-    width: clamp(58px, 11vw, 64px);
-  }
-
-  .sticker-six {
-    top: 9.2%;
-    left: 59.1%;
-  }
-
-  .sticker-sixteen {
-    top: 26.5%;
-    left: 61.1%;
-  }
-
-  .sticker-ten {
-    top: 20%;
-    left: 70.7%;
-  }
-
-  .sticker-fourteen {
-    top: 9.3%;
-    left: 81.5%;
-  }
-
-  .sticker-seven {
-    top: 18.2%;
-    left: 37.1%;
-  }
-
-  .draggable-sticker.sticker-nineteen {
-    top: 8.4%;
-    left: 19.1%;
-  }
-
-  .sticker-twelve {
-    top: 16.1%;
-    left: 9.3%;
-  }
-
-  .sticker-eight {
-    top: 49.5%;
-    left: 86%;
-  }
-
-  .draggable-sticker.sticker-eighteen {
-    top: 56.2%;
-    left: 71%;
-  }
-
-  .sticker-eleven {
-    top: 56.1%;
-    left: 52.1%;
-  }
-
-  .sticker-four {
-    top: 57.7%;
-    left: 17.3%;
-  }
-}
-
-@media (min-width: 401px) and (max-width: 559px) {
-  .profile-section {
-    --hero-card-center-y: 42svh;
-  }
-
-  .draggable-sticker.sticker-one {
-    --narrow-portrait-size: clamp(110px, 25vw, 124px);
-    top: 23.9%;
-    left: 21.8%;
-    width: var(--narrow-portrait-size);
-  }
-
-  .sticker-four {
-    top: 57.6%;
-    left: 20.9%;
-  }
-
-  .sticker-seven {
-    top: 12.6%;
-    left: 58.3%;
-  }
-
-  .sticker-ten {
-    top: 20.2%;
-    right: auto;
-    bottom: auto;
-    left: 44.5%;
-  }
-
-  .sticker-eleven {
-    top: 55.4%;
-    right: auto;
-    left: 41.7%;
-  }
-
-  .sticker-twelve {
-    top: 15.4%;
-    right: auto;
-    left: 7.7%;
-  }
-
-  .sticker-sixteen {
-    top: 22.8%;
-    left: 65.3%;
-  }
-
-  .sticker-seventeen {
-    top: 37.8%;
-    right: auto;
-    left: 86.9%;
-  }
-
-  .draggable-sticker.sticker-eighteen {
-    top: 55.5%;
-    right: auto;
-    left: 65.9%;
-  }
-
-  .draggable-sticker.sticker-nineteen {
-    top: 7.5%;
-    left: 24.5%;
-  }
-}
-
-@media (min-width: 1600px) {
-  .sticker-six {
-    top: 41.3%;
-    left: 75%;
   }
 }

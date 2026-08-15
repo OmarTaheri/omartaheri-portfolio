@@ -58,6 +58,32 @@ function parseMarkdown(markdown: string): MarkdownBlock[] {
   return blocks;
 }
 
+function renderInlineMarkdown(text: string): ReactNode[] {
+  const tokens: ReactNode[] = [];
+  const pattern = /\[([^\]]+)\]\((https?:\/\/[^\s)]+)\)|\*\*([^*]+)\*\*/g;
+  let cursor = 0;
+  let match: RegExpExecArray | null;
+
+  while ((match = pattern.exec(text)) !== null) {
+    if (match.index > cursor) tokens.push(text.slice(cursor, match.index));
+
+    if (match[1] && match[2]) {
+      tokens.push(
+        <a key={`${match.index}-${match[2]}`} href={match[2]} target="_blank" rel="noreferrer">
+          {match[1]}
+        </a>,
+      );
+    } else if (match[3]) {
+      tokens.push(<strong key={`${match.index}-strong`}>{match[3]}</strong>);
+    }
+
+    cursor = pattern.lastIndex;
+  }
+
+  if (cursor < text.length) tokens.push(text.slice(cursor));
+  return tokens;
+}
+
 export function MarkdownContent({
   markdown,
   afterFirstHeading,
@@ -87,13 +113,13 @@ export function MarkdownContent({
           return (
             <ul key={`list-${index}`}>
               {block.items.map((item) => (
-                <li key={item}>{item}</li>
+                <li key={item}>{renderInlineMarkdown(item)}</li>
               ))}
             </ul>
           );
         }
 
-        return <p key={`paragraph-${index}`}>{block.text}</p>;
+        return <p key={`paragraph-${index}`}>{renderInlineMarkdown(block.text)}</p>;
       })}
     </div>
   );

@@ -1,0 +1,18 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 832 936" role="img" aria-labelledby="title desc">
+  <title id="title">AUI Summer School project artwork</title>
+  <desc id="desc">A modern Industry 4.0 summer school poster inspired by Al Akhawayn University.</desc>
+  <defs><linearGradient id="bg" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#062b44"/><stop offset="1" stop-color="#0c5873"/></linearGradient><linearGradient id="sun" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#fbbf24"/><stop offset="1" stop-color="#f97316"/></linearGradient></defs>
+  <rect width="832" height="936" rx="56" fill="url(#bg)"/>
+  <circle cx="670" cy="154" r="106" fill="url(#sun)"/>
+  <g opacity=".16" stroke="#7dd3fc" stroke-width="4"><path d="M0 590h832M0 650h832M0 710h832M140 480v320M230 480v320M320 480v320M410 480v320M500 480v320M590 480v320M680 480v320"/></g>
+  <g transform="translate(88 118)">
+    <text x="0" y="0" fill="#bae6fd" font-family="Arial, sans-serif" font-size="24" font-weight="700" letter-spacing="4">AL AKHAWAYN UNIVERSITY</text>
+    <text x="0" y="92" fill="#fff" font-family="Arial, sans-serif" font-size="82" font-weight="900">SUMMER</text>
+    <text x="0" y="174" fill="#fff" font-family="Arial, sans-serif" font-size="82" font-weight="900">SCHOOL</text>
+    <text x="0" y="228" fill="#fbbf24" font-family="Arial, sans-serif" font-size="36" font-weight="800">2026 · IFRANE</text>
+  </g>
+  <g transform="translate(94 454)" fill="none" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M80 162v-88l78-46 78 46v88l-78 46Z" stroke="#fff" stroke-width="18"/><circle cx="158" cy="118" r="34" stroke="#fbbf24" stroke-width="16"/><path d="M276 198h108v-96h108v96h108" stroke="#7dd3fc" stroke-width="18"/><path d="M330 102V48m108 54V28m108 74V58" stroke="#fff" stroke-width="14"/>
+  </g>
+  <g transform="translate(92 750)"><rect width="648" height="94" rx="26" fill="#fff" opacity=".1"/><text x="324" y="40" fill="#fff" text-anchor="middle" font-family="Arial, sans-serif" font-size="27" font-weight="800">INDUSTRY 4.0</text><text x="324" y="72" fill="#bae6fd" text-anchor="middle" font-family="Arial, sans-serif" font-size="23">&amp; SMART MANUFACTURING</text></g>
+</svg>
