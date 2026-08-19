@@ -154,7 +154,7 @@ export const projects: readonly Project[] = [
       "A multimodal AI-content detector for text, images, audio, and video, available on the web and in the browser.",
     status: "Active development",
     tags: ["AI detection", "Multimodal"],
-    technologies: ["Next.js 16", "React 19", "WXT", "Hono", "TypeScript", "PocketBase", "Zod"],
+    technologies: ["Next.js 16", "React 19", "WXT", "Hono", "TypeScript", "PostgreSQL", "Zod"],
     art: "/art/project-heynotai.svg",
     repository: "https://github.com/OmarTaheri/heynotai",
     website: "https://heynotai.com/",

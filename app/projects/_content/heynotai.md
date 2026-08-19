@@ -10,14 +10,14 @@ HeyNotAI is a multimodal detector for AI-generated content. It accepts text, ima
 
 ## Architecture
 
-The web application and extension communicate with the public API over HTTPS. PocketBase stays behind that API for authentication, storage, and realtime updates instead of being exposed directly to either client. Detection jobs move through queued, scanning, done, or failed states, and results can be reused from a per-engine cache.
+The web application and extension communicate with the public API over HTTPS. PostgreSQL stays behind that API as the primary relational database instead of being exposed directly to either client. The API owns authentication, persistence, provider integrations, and detection-job state. Jobs move through queued, scanning, done, or failed states, and results can be reused from a per-engine cache.
 
 ## Technologies
 
 - Next.js 16, React 19, TypeScript, and Tailwind CSS 4
 - WXT, React, and Chrome Manifest V3 for the extension
 - Hono on Node.js 22 for the API
-- PocketBase for authentication, storage, realtime updates, and schema
+- PostgreSQL for accounts, scans, collections, job state, and billing metadata
 - Zod for shared validation schemas
 - Hugging Face Inference and Modulate Velma detection providers
 - FFmpeg and yt-dlp for video and YouTube ingestion
