@@ -16,7 +16,7 @@ const expectedProjects = [
     slug: "heynotai",
     title: "HeyNotAI",
     markdownHeadings: ["Overview", "Product surfaces", "Architecture", "Technologies", "Current status"],
-    markdownTechnologies: ["Next.js 16", "WXT", "Hono", "PocketBase", "Zod", "Stripe"],
+    markdownTechnologies: ["Next.js 16", "WXT", "Hono", "PostgreSQL", "Zod", "Stripe"],
     externalLinks: ["https://heynotai.com/", "https://github.com/OmarTaheri/heynotai"],
   },
   {
