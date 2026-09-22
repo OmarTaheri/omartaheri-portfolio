@@ -1,4 +1,5 @@
 import auiSummerSchool from "./projects/_content/aui-summer-school.md?raw";
+import colorAnalysis from "./projects/_content/color-analysis.md?raw";
 import goPlan from "./projects/_content/go-plan.md?raw";
 import heynotai from "./projects/_content/heynotai.md?raw";
 import netlogger from "./projects/_content/netlogger.md?raw";
@@ -9,6 +10,7 @@ import ultimateTierBoard from "./projects/_content/the-ultimate-tier-board.md?ra
 
 export const projectMarkdown: Readonly<Record<string, string>> = {
   "aui-summer-school": auiSummerSchool,
+  "color-analysis": colorAnalysis,
   "go-plan": goPlan,
   heynotai,
   netlogger,

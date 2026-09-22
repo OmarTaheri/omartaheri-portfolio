@@ -174,6 +174,19 @@ export const projects: readonly Project[] = [
     website: "/",
   },
   {
+    slug: "color-analysis",
+    title: "The Colour of Excess",
+    description:
+      "An interactive visual essay exploring how colour charts ambition, persuasion, excess, and collapse in The Wolf of Wall Street.",
+    status: "Live",
+    tags: ["Film study", "Interactive essay"],
+    technologies: ["Next.js 16", "React 19", "TypeScript", "GSAP", "jsPDF"],
+    art: "/art/project-color-analysis.webp",
+    fullArt: true,
+    repository: "https://github.com/OmarTaheri/color-analysis",
+    website: "https://film.omartaheri.com/",
+  },
+  {
     slug: "tiermaker-js",
     title: "TierMaker.js",
     description:

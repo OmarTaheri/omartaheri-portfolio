@@ -27,6 +27,13 @@ const expectedProjects = [
     externalLinks: ["https://github.com/OmarTaheri/omartaheri-portfolio"],
   },
   {
+    slug: "color-analysis",
+    title: "The Colour of Excess",
+    markdownHeadings: ["Why I built it", "What I built", "Design direction", "Built with", "Current status"],
+    markdownTechnologies: ["Next.js 16", "React 19", "TypeScript", "GSAP", "jsPDF"],
+    externalLinks: ["https://film.omartaheri.com/", "https://github.com/OmarTaheri/color-analysis", "https://film.omartaheri.com/"],
+  },
+  {
     slug: "tiermaker-js",
     title: "TierMaker.js",
     markdownHeadings: ["Why I built it", "What it does", "The documentation", "Built with", "Current status"],
@@ -151,7 +158,7 @@ const expectedMovableIds = [
   "projects-heading",
   "project-card-heynotai",
   "project-card-portfolio-omartaheri",
-  "project-card-tiermaker-js",
+  "project-card-color-analysis",
   "project-card-see-more",
   "now-card",
   "contact-card",
@@ -409,7 +416,7 @@ test("renders the homepage sections in order with three projects and a see-more 
   );
 });
 
-test("renders all eight project cards on the project index", async () => {
+test("renders all nine project cards on the project index", async () => {
   const { status, contentType, documentHtml } = await renderPage("/projects");
 
   assert.equal(status, 200);
@@ -430,15 +437,15 @@ test("renders all eight project cards on the project index", async () => {
   );
   assert.equal(
     anchorHrefs(collection).length,
-    8,
-    "the full project collection should contain exactly eight card links",
+    9,
+    "the full project collection should contain exactly nine card links",
   );
   assert.deepEqual(
     detailHrefs,
     expectedProjects.map((project) => `/projects/${project.slug}`),
-    "the project index should link each of the eight known projects once",
+    "the project index should link each of the nine known projects once",
   );
-  assert.equal(new Set(detailHrefs).size, 8);
+  assert.equal(new Set(detailHrefs).size, 9);
 
   const collectionText = textContent(collection);
   for (const project of expectedProjects) {

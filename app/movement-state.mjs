@@ -57,7 +57,7 @@ export const MOVABLE_IDS = Object.freeze([
   "projects-heading",
   "project-card-heynotai",
   "project-card-portfolio-omartaheri",
-  "project-card-tiermaker-js",
+  "project-card-color-analysis",
   "project-card-see-more",
   "now-card",
   "contact-card",
